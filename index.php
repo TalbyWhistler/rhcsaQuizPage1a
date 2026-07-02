@@ -9,5 +9,6 @@
 <body>
     <?php include 'php/header.php' ?> 
     <?php include 'php/navbar.php' ?>
+    <?php include 'php/welcome_frontpage.php' ?>
 </body>
 </html>

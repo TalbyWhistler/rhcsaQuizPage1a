@@ -1,0 +1,3 @@
+Memory Table quiz doesn't reset wrong answers.(but emulate for buttons)
+Add instructions, larger scoreboard?
+Add welcome text.

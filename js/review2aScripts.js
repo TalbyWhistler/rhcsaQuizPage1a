@@ -42,6 +42,7 @@ function chapterButton(chapter)
     document.getElementById("startQuizStatusIndicator").innerHTML='Ready';
     activeChapter=chapter;
     questionCount=0;
+    userAnswers=[];//////////////////////////////
     callBackendQa2("fetchQa",{chapter:chapter},loadChapterData);
 }
 

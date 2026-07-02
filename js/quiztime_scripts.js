@@ -13,9 +13,10 @@ function quizTimeTesto()
 
 function handleTakeQuizButton()
 {
-    const MAX_CHAPTER=2;
+    const MAX_CHAPTER=6;
     console.log("Handling take quiz button...");
-    let inputValue=document.getElementById("quizTimeChapterChoice").value; 
+    //console.log('///////////////////////////////////');
+    let inputValue=Number(document.getElementById("quizTimeChapterChoice").value); 
     console.log("value",inputValue);
     if (inputValue.length==0)
     {
