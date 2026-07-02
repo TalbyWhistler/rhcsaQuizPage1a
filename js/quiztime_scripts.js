@@ -138,6 +138,7 @@ function kaChapterChoice(chapterIn)
 function printQuizQuestion(data)
 {
    // console.log(data);
+    
     Window.hasBeenAnswered=false;
     document.getElementById("answerOutputArea").innerHTML='';
     let questionData=data["questions"];
@@ -152,6 +153,7 @@ function printQuizQuestion(data)
     console.log(data);
     let chapter=questionData[0]["chapter"];
     let questionNumber=questionData[0]["questionNumber"];
+    // quizCallBackend("queryForTwo",{chapter:chapter,questionNumber:questionNumber},setQueryForTwo);
     let questionText=questionData[0]["questionText"];
   //  console.log("Question text",questionText);
     let a=questionData[0]["a"];
@@ -159,6 +161,17 @@ function printQuizQuestion(data)
     let b=questionData[0]["b"];
     let c=questionData[0]["c"];
     let d=questionData[0]["d"];
+    let hasTwoAnswers=questionData[0]["hasTwoAnswers"];
+    if (hasTwoAnswers)
+    {
+        console.log("This question has two answers...",hasTwoAnswers);
+        twoAnswers=true;
+    }
+    else 
+    {
+        twoAnswers=false;
+    }
+    
     /*
     let questionCardContents=
     `
@@ -174,7 +187,7 @@ function printQuizQuestion(data)
         </br>
     `;
     */
-
+   // console.log("TWO ANSWERS",twoAnswers);
     let smallHeader=
     `
         <p>Chapter:${chapter} Question:${questionNumber}</p>
@@ -206,7 +219,7 @@ function printQuizQuestion(data)
     let questionCard='<div id="questionCard" class="questionCardClass">'+questionCardContents+'</div>';
     document.getElementById("quizOutputArea").innerHTML=questionCard;
 
-    quizCallBackend("queryForTwo",{chapter:chapter,questionNumber:questionNumber},setQueryForTwo);
+   
 
 
     return true;
@@ -218,6 +231,7 @@ function setQueryForTwo(data)
 {
     console.log(data);
     twoAnswers=data;
+    console.log("TWO ANSWERS",twoAnswers);
 }
 
 

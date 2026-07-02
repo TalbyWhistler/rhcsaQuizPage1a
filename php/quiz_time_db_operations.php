@@ -21,7 +21,8 @@ function fetchQuizQuestion($chapter,$questionNumber)
                     $b=$row["b"];
                     $c=$row["c"];
                     $d=$row["d"];
-                    $unitArray=['chapter'=>$chapter,'questionNumber'=>$questionNumber,'questionText'=>$questionText,'a'=>$a,'b'=>$b,'c'=>$c,'d'=>$d];
+                    $hasTwoAnswers=$row["hasTwoAnswers"];
+                    $unitArray=['chapter'=>$chapter,'questionNumber'=>$questionNumber,'questionText'=>$questionText,'a'=>$a,'b'=>$b,'c'=>$c,'d'=>$d,'hasTwoAnswers'=>$hasTwoAnswers];
                     array_push($outputQuestions,$unitArray);
                 }
             $stmt=$conn->prepare("select * from answers where chapter=? and questionNumber=?");
