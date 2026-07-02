@@ -21,7 +21,8 @@ function fetchQuizQuestion($chapter,$questionNumber)
                     $b=$row["b"];
                     $c=$row["c"];
                     $d=$row["d"];
-                    $unitArray=['chapter'=>$chapter,'questionNumber'=>$questionNumber,'questionText'=>$questionText,'a'=>$a,'b'=>$b,'c'=>$c,'d'=>$d];
+                    $hasTwoAnswers=$row["hasTwoAnswers"];
+                    $unitArray=['chapter'=>$chapter,'questionNumber'=>$questionNumber,'questionText'=>$questionText,'a'=>$a,'b'=>$b,'c'=>$c,'d'=>$d,'hasTwoAnswers'=>$hasTwoAnswers];
                     array_push($outputQuestions,$unitArray);
                 }
             $stmt=$conn->prepare("select * from answers where chapter=? and questionNumber=?");
@@ -52,11 +53,11 @@ function fetchQuizQuestion($chapter,$questionNumber)
             }
 }
 
-function fetchQuizAnswer($chapter,$questionNumber,$choice)
+function fetchQuizAnswer($chapter,$questionNumber,$choice,$choice2)
 {
     include 'db_connect.php';
     $returnMessage='';
-    $stmt=$conn->prepare("select answerLetter,answer from answers where chapter=? and questionNumber=?");
+    $stmt=$conn->prepare("select answerLetter,answer,secondAnswer from answers where chapter=? and questionNumber=?");
     $stmt->bind_param("ii",$chapter,$questionNumber);
     $outputArray=[];
     if ($stmt->execute())
@@ -66,12 +67,38 @@ function fetchQuizAnswer($chapter,$questionNumber,$choice)
                 {
                     $answerLetter=$row["answerLetter"];
                     $answer=$row["answer"];
-                    $unitArray=['chapter'=>$chapter,'questionNumber'=>$questionNumber,'answerLetter'=>$answerLetter,'choice'=>$choice,'answer'=>$answer];
+                    $answerLetter2=$row["secondAnswer"];
+                    $unitArray=['chapter'=>$chapter,'questionNumber'=>$questionNumber,'answerLetter'=>$answerLetter,'answerLetter2'=>$answerLetter2,'choice'=>$choice,'choice2'=>$choice2,'answer'=>$answer];
                     array_push($outputArray,$unitArray);
                 }
             return $outputArray;
         }
     
+}
+
+
+function queryForTwo($chapter,$questionNumber)
+{
+    include 'db_connect.php';
+    $returnMessage='';
+    $stmt=$conn->prepare("select secondAnswer from answers where chapter=? and questionNumber=?");
+    $stmt->bind_param("ii",$chapter,$questionNumber);
+    if ($stmt->execute())
+        {
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $secondAnswer=$row["secondAnswer"];
+                    if (strlen($secondAnswer)>0) 
+                        {
+                            return true;
+                        }
+                        else 
+                            {
+                                return false;
+                            }
+                }
+        }
 }
 
 ?>

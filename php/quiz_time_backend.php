@@ -29,8 +29,28 @@
                     $chapter=$params["chapter"];
                     $questionNumber=$params["questionNumber"];
                     $choice=$params["choice"];
+                    $choice2='';
+                    if (strlen($choice)>1)
+                        {
+                            $choice=substr($params["choice"],0,1);
+                            $choice2=substr($params["choice"],1,1);
+                        }
+                    else 
+                        {
+                             $choice=$params["choice"];
+                             $choice2='';
+                        }
                   //  $outputMEssage=$chapter.$questionNumber.$choice;
-                    $outputMessage=fetchQuizAnswer($chapter,$questionNumber,$choice);
+                    $outputMessage=fetchQuizAnswer($chapter,$questionNumber,$choice,$choice2);
+                    break;
+                }
+            case("queryForTwo"):
+                {
+                    $params=$jsonInput["params"];
+                    $chapter=$params["chapter"];
+                    $questionNumber=$params["questionNumber"];
+                    $outputMessage=queryForTwo($chapter,$questionNumber);
+                  //  $outputMessage="QUERY FOR TWO CONTROLLER";
                     break;
                 }
         }

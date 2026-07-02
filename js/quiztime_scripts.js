@@ -3,6 +3,10 @@ window.chapter=0;
 window.quizScore=0;
 window.hasBeenAnswered=false;
 
+let twoAnswers=false;
+let twoAnswerCount=0;
+let firstAnswer='';
+
 
 let activeChapter=0;
 
@@ -134,6 +138,7 @@ function kaChapterChoice(chapterIn)
 function printQuizQuestion(data)
 {
    // console.log(data);
+    
     Window.hasBeenAnswered=false;
     document.getElementById("answerOutputArea").innerHTML='';
     let questionData=data["questions"];
@@ -148,6 +153,7 @@ function printQuizQuestion(data)
     console.log(data);
     let chapter=questionData[0]["chapter"];
     let questionNumber=questionData[0]["questionNumber"];
+    // quizCallBackend("queryForTwo",{chapter:chapter,questionNumber:questionNumber},setQueryForTwo);
     let questionText=questionData[0]["questionText"];
   //  console.log("Question text",questionText);
     let a=questionData[0]["a"];
@@ -155,6 +161,17 @@ function printQuizQuestion(data)
     let b=questionData[0]["b"];
     let c=questionData[0]["c"];
     let d=questionData[0]["d"];
+    let hasTwoAnswers=questionData[0]["hasTwoAnswers"];
+    if (hasTwoAnswers)
+    {
+        console.log("This question has two answers...",hasTwoAnswers);
+        twoAnswers=true;
+    }
+    else 
+    {
+        twoAnswers=false;
+    }
+    
     /*
     let questionCardContents=
     `
@@ -170,7 +187,7 @@ function printQuizQuestion(data)
         </br>
     `;
     */
-
+   // console.log("TWO ANSWERS",twoAnswers);
     let smallHeader=
     `
         <p>Chapter:${chapter} Question:${questionNumber}</p>
@@ -184,37 +201,76 @@ function printQuizQuestion(data)
             <td><h3>${questionText}</h3></td>
         </tr>
         <tr>
-            <td><p>${a}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'a')">x</button></td>
+            <td><p>${a}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'a',${twoAnswers})">x</button></td>
         
 
         </tr>
         <tr>
-             <td><p>${b}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'b')">x</button></td>
+             <td><p>${b}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'b',${twoAnswers})">x</button></td>
         </tr>
         <tr>
-             <td><p>${c}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'c')">x</button></td>
+             <td><p>${c}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'c',${twoAnswers})">x</button></td>
         </tr>
         <tr>
-             <td><p>${d}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'d')">x</button></td>
+             <td><p>${d}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'d',${twoAnswers})">x</button></td>
         </tr>
     `;
     let questionCardContents=smallHeader+tableOpener+middleRows+tableCloser;
     let questionCard='<div id="questionCard" class="questionCardClass">'+questionCardContents+'</div>';
     document.getElementById("quizOutputArea").innerHTML=questionCard;
+
+   
+
+
     return true;
     
 }
 
 
-function answerButton(chapter,questionNumber,choice)
+function setQueryForTwo(data)
 {
-    console.log("Answer button ",chapter,":",questionNumber,"choice",choice);
-    quizCallBackend("fetchQuizAnswer",{chapter:chapter,questionNumber:questionNumber,choice:choice},handleAnswer);
-    console.log("Return to answer button");
-    
-   // console.log("Answers",answerLetter + " " + choice);
-    
+    console.log(data);
+    twoAnswers=data;
+    console.log("TWO ANSWERS",twoAnswers);
 }
+
+
+function answerButtonB(chapter,questionNumber,choice)
+{
+     console.log("Answer button ",chapter,":",questionNumber,"choice",choice);
+        quizCallBackend("fetchQuizAnswer",{chapter:chapter,questionNumber:questionNumber,choice:choice},handleAnswer);
+        console.log("Return to answer button");
+    
+   // console.log("Answers",answerLetter + " " + choice);   
+}
+
+function answerButton(chapter,questionNumber,choice,waitForSecond)
+{
+    if (!waitForSecond)
+    {
+        console.log("Answer button ",chapter,":",questionNumber,"choice",choice);
+        quizCallBackend("fetchQuizAnswer",{chapter:chapter,questionNumber:questionNumber,choice:choice},handleAnswer);
+        console.log("Return to answer button");
+        twoAnswerCount=0;
+    }
+    else if(waitForSecond && twoAnswerCount==0)
+    {
+       // twoAnswers=false;
+       console.log("Wait for second part 1",choice)
+        twoAnswerCount+=1;
+        firstAnswer=choice;
+    }
+    else if (waitForSecond && twoAnswerCount==1)
+    {
+        console.log("Wait for second part 2",choice);
+        console.log("fullchoice",firstAnswer+choice);
+        waitForSecond=false;
+        twoAnswerCount=0;
+        let fullChoice=firstAnswer+choice;
+        quizCallBackend("fetchQuizAnswer",{chapter:chapter,questionNumber:questionNumber,choice:fullChoice},handleAnswer);
+    }
+}
+
 
 function handleNext()
 {
@@ -287,30 +343,57 @@ function handleAnswer(data)
     console.log("Window has been answered",Window.hasBeenAnswered);
     let systemResponse='';
     let userChoice=data[0]["choice"];
+    let userChoice2=data[0]["choice2"];
     let answerLetter=data[0]["answerLetter"];
     let answer=data[0]["answer"];
+    let answerLetter2=data[0]["answerLetter2"];
     let nextButton=
     `
         <button id='quizNextButton' class='nextButton' onclick="handleNext()">Next</button>
     `
-   
-    if (userChoice===answerLetter && !Window.hasBeenAnswered)
+    if(answerLetter2)
     {
-        systemResponse="That's right! "+answer;
-        document.getElementById("answerOutputArea").innerHTML=systemResponse + '<br/>' + nextButton;
-        Window.hasBeenAnswered=true;
-        window.quizScore+=1;
-    }
-    else if (userChoice!=answerLetter && !Window.hasBeenAnswered)
-    {
-        systemResponse="No I'm afraid not, the correct answer is " + answerLetter + " " + answer + '<br/>' + nextButton;
-        document.getElementById("answerOutputArea").innerHTML=systemResponse;
-        Window.hasBeenAnswered=true;
+        console.log("Process for two answers");
+        console.log("userChoice",userChoice,"userChoice2",userChoice2,"answerLetter",answerLetter,"answerLetter2",answerLetter2);
+        if ( (userChoice==answerLetter && userChoice2 == answerLetter2) || (userChoice==answerLetter2 && userChoice2==answerLetter) )
+        {
+            console.log("It appears that both answer are correct");
+            systemResponse="That's right! "+answer;
+            document.getElementById("answerOutputArea").innerHTML=systemResponse + '<br/>' + nextButton;
+            Window.hasBeenAnswered=true;
+            window.quizScore+=1;
+        }
+        else 
+        {
+            console.log("Didn't get them both right");
+            systemResponse="No I'm afraid not, the correct answer is " + answerLetter + " " + answer + '<br/>' + nextButton;
+            document.getElementById("answerOutputArea").innerHTML=systemResponse;
+            Window.hasBeenAnswered=true;
+        }
     }
     else 
     {
-        
+        console.log("Process for one answer");
+        if (userChoice===answerLetter && !Window.hasBeenAnswered)
+        {
+            systemResponse="That's right! "+answer;
+            document.getElementById("answerOutputArea").innerHTML=systemResponse + '<br/>' + nextButton;
+            Window.hasBeenAnswered=true;
+            window.quizScore+=1;
+        }
+            else if (userChoice!=answerLetter && !Window.hasBeenAnswered)
+            {
+                systemResponse="No I'm afraid not, the correct answer is " + answerLetter + " " + answer + '<br/>' + nextButton;
+                document.getElementById("answerOutputArea").innerHTML=systemResponse;
+                Window.hasBeenAnswered=true;
+            }
+            else 
+            {
+                
+            }   
     }
+   
+    
 
    
     
