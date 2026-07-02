@@ -226,14 +226,14 @@ function printQuizQuestion(data)
     
 }
 
-
+/*
 function setQueryForTwo(data)
 {
     console.log(data);
     twoAnswers=data;
     console.log("TWO ANSWERS",twoAnswers);
 }
-
+*/
 
 function answerButtonB(chapter,questionNumber,choice)
 {
