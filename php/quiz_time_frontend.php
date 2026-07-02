@@ -32,11 +32,25 @@ function cb($id,$class,$function,$inner)
 
     $script='<script src="js/quiztime_scripts.js"></script>';
     $chapterChoice='<input type="number" id="quizTimeChapterChoice" class="panelControl"/>';
-    $chapterChoiceLabel=ce('label','chapterChoiceLabel','label','Chapter');
+    $chapterChoiceLabel=ce('label','chapterChoiceLabel','label','Chapters');
     $br='</br>';
     $takeQuizButton=cb("takeQuizButton","panelButton",'handleTakeQuizButton',"Take Quiz!");
     $takeQuizStatusIndicator=ce('p',"takeQuizStatusIndicator","statusIndicator","Ready");
     $statusIndicatorBox=ce('div','takeQuizStatusIndicatorBox','statusIndicatorBox',$takeQuizStatusIndicator);
+    
+    $chapterButtons='';
+    for($i=1;$i<=24;$i++)
+        {
+            $chapterButtons=$chapterButtons.
+            "
+                <button id='chapterButton$i' class='chapterButton' onclick='kaChapterChoice($i)'>$i</button>
+            ";
+        };
+
+    $chapterIndicator=createElement("label","chapterIndicator","statusIndicator",'None');
+    $chapterIndicatorLabel=createElement("label","chapterIndicatorLabel","label","Current Chapter:");
+
+        /*
     $choiceBoxContents=''
         .$chapterChoice 
         .$chapterChoiceLabel 
@@ -44,8 +58,22 @@ function cb($id,$class,$function,$inner)
         .$takeQuizButton
         .$br
         .$statusIndicatorBox;
+    */
+    $choiceBoxContents=
+    "
+        $chapterChoiceLabel
+        $chapterButtons
+        $br
+        $chapterIndicatorLabel$chapterIndicator
+        $br
+        $takeQuizButton
+        $statusIndicatorBox
+    ";
+    
+    
+
     $chapterChoiceBox=ce('div','chapterChoiceBox','panelBox',$choiceBoxContents);
-    $title=ce('h1','quizTimeTitle','title','Quiz Time!');
+    $title=ce('h1','quizTimeTitle','title','Do you know this already?');
     $quizOutput=ce('p','quizOutputArea','outputArea','');
     $answerOutput=ce('p','answerOutputArea','outputArea','');
     $pageContents=''

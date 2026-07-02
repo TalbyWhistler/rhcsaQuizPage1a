@@ -1,8 +1,10 @@
 window.questionCount=1;
-window.chapter=1;
+window.chapter=0;
 window.quizScore=0;
 window.hasBeenAnswered=false;
 
+
+let activeChapter=0;
 
 function quizTimeTesto()
 {
@@ -12,6 +14,35 @@ function quizTimeTesto()
 
 
 function handleTakeQuizButton()
+{
+    const MAX_CHAPTER=6;
+    let inputValue=activeChapter;
+    console.log("handle button // ",activeChapter);
+    if (activeChapter<1)
+    {
+        document.getElementById("takeQuizStatusIndicator").innerHTML="Please select a chapter first";
+    }
+    else if (activeChapter>MAX_CHAPTER)
+    {
+        document.getElementById("takeQuizStatusIndicator").innerHTML="Chapter not available";
+    }
+    else 
+    {
+        window.chapter=inputValue;
+        document.getElementById("takeQuizStatusIndicator").innerHTML="Input Accepted...loading quiz for chapter "+`${inputValue}`+"...";
+       // document.getElementById("quizTimeChapterChoice").value='';
+        setTimeout(()=>{document.getElementById("takeQuizStatusIndicator").innerHTML="Ready"},3000);
+        console.log("Here we start processing the quiz....");
+       
+     //   let params={chapter:inputValue};
+        console.log("input value",inputValue)
+        quizControl(inputValue);
+    }
+
+}
+
+/*
+function handleTakeQuizButtonB()
 {
     const MAX_CHAPTER=6;
     console.log("Handling take quiz button...");
@@ -42,6 +73,7 @@ function handleTakeQuizButton()
         //quizCallBackend("fetchQuiz",params,testPrint);
     }
 }
+    */
 
 function testPrint(data)
 {
@@ -89,9 +121,13 @@ function quizControl(chapter)
     
     // quizCallBackend("fetchQuizAnswer",{chapter:chapter,questionNumber:questionNumber},testPrint);
    //  window.questionCount+=1;
- 
-    
-    
+}
+
+function kaChapterChoice(chapterIn)
+{
+    console.log("kaChapter choice",chapterIn);
+    activeChapter=chapterIn;
+    document.getElementById("chapterIndicator").innerHTML=chapterIn;
 }
 
 
@@ -261,13 +297,13 @@ function handleAnswer(data)
     if (userChoice===answerLetter && !Window.hasBeenAnswered)
     {
         systemResponse="That's right! "+answer;
-        document.getElementById("answerOutputArea").innerHTML=systemResponse + nextButton;
+        document.getElementById("answerOutputArea").innerHTML=systemResponse + '<br/>' + nextButton;
         Window.hasBeenAnswered=true;
         window.quizScore+=1;
     }
     else if (userChoice!=answerLetter && !Window.hasBeenAnswered)
     {
-        systemResponse="No I'm afraid not, the correct answer is " + answerLetter + " " + answer + nextButton;
+        systemResponse="No I'm afraid not, the correct answer is " + answerLetter + " " + answer + '<br/>' + nextButton;
         document.getElementById("answerOutputArea").innerHTML=systemResponse;
         Window.hasBeenAnswered=true;
     }
