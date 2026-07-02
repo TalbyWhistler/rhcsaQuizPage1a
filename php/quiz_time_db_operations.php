@@ -52,11 +52,11 @@ function fetchQuizQuestion($chapter,$questionNumber)
             }
 }
 
-function fetchQuizAnswer($chapter,$questionNumber,$choice)
+function fetchQuizAnswer($chapter,$questionNumber,$choice,$choice2)
 {
     include 'db_connect.php';
     $returnMessage='';
-    $stmt=$conn->prepare("select answerLetter,answer from answers where chapter=? and questionNumber=?");
+    $stmt=$conn->prepare("select answerLetter,answer,secondAnswer from answers where chapter=? and questionNumber=?");
     $stmt->bind_param("ii",$chapter,$questionNumber);
     $outputArray=[];
     if ($stmt->execute())
@@ -66,7 +66,8 @@ function fetchQuizAnswer($chapter,$questionNumber,$choice)
                 {
                     $answerLetter=$row["answerLetter"];
                     $answer=$row["answer"];
-                    $unitArray=['chapter'=>$chapter,'questionNumber'=>$questionNumber,'answerLetter'=>$answerLetter,'choice'=>$choice,'answer'=>$answer];
+                    $answerLetter2=$row["secondAnswer"];
+                    $unitArray=['chapter'=>$chapter,'questionNumber'=>$questionNumber,'answerLetter'=>$answerLetter,'answerLetter2'=>$answerLetter2,'choice'=>$choice,'choice2'=>$choice2,'answer'=>$answer];
                     array_push($outputArray,$unitArray);
                 }
             return $outputArray;
