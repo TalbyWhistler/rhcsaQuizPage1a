@@ -7,6 +7,10 @@ let quizRightCount=0;
 function initializeQuiz2()
 {
     console.log("quiz 2 page");
+    quizRightCount=0;
+    quizWrongCount=0;
+    numQuestions=0;
+  //  document.getElementById("rightWrongStatus").innerHTML=quizWrongCount;
     attachStyleSheetQuiz2();
   //  callBackendQ2("fetchRecordsList",'',console.log);
     fetchAvailableFiguresForEdit();
@@ -166,6 +170,7 @@ function printQuiz(data)
     document.getElementById("quizTableOutput").innerHTML=tableContents;
     quizWrongCount=0;
     quizRightCount=0;
+    document.getElementById("wrongCount").innerHTML='Wrong Answers: '+quizWrongCount;
 }
 
 
