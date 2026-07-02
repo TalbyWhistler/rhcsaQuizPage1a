@@ -44,6 +44,15 @@
                     $outputMessage=fetchQuizAnswer($chapter,$questionNumber,$choice,$choice2);
                     break;
                 }
+            case("queryForTwo"):
+                {
+                    $params=$jsonInput["params"];
+                    $chapter=$params["chapter"];
+                    $questionNumber=$params["questionNumber"];
+                    $outputMessage=queryForTwo($chapter,$questionNumber);
+                  //  $outputMessage="QUERY FOR TWO CONTROLLER";
+                    break;
+                }
         }
         
     echo json_encode($outputMessage);

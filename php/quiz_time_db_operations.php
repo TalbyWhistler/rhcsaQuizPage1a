@@ -75,4 +75,29 @@ function fetchQuizAnswer($chapter,$questionNumber,$choice,$choice2)
     
 }
 
+
+function queryForTwo($chapter,$questionNumber)
+{
+    include 'db_connect.php';
+    $returnMessage='';
+    $stmt=$conn->prepare("select secondAnswer from answers where chapter=? and questionNumber=?");
+    $stmt->bind_param("ii",$chapter,$questionNumber);
+    if ($stmt->execute())
+        {
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $secondAnswer=$row["secondAnswer"];
+                    if (strlen($secondAnswer)>0) 
+                        {
+                            return true;
+                        }
+                        else 
+                            {
+                                return false;
+                            }
+                }
+        }
+}
+
 ?>

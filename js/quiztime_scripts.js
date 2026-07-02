@@ -3,7 +3,7 @@ window.chapter=0;
 window.quizScore=0;
 window.hasBeenAnswered=false;
 
-let twoAnswers=true;
+let twoAnswers=false;
 let twoAnswerCount=0;
 let firstAnswer='';
 
@@ -205,8 +205,19 @@ function printQuizQuestion(data)
     let questionCardContents=smallHeader+tableOpener+middleRows+tableCloser;
     let questionCard='<div id="questionCard" class="questionCardClass">'+questionCardContents+'</div>';
     document.getElementById("quizOutputArea").innerHTML=questionCard;
+
+    quizCallBackend("queryForTwo",{chapter:chapter,questionNumber:questionNumber},setQueryForTwo);
+
+
     return true;
     
+}
+
+
+function setQueryForTwo(data)
+{
+    console.log(data);
+    twoAnswers=data;
 }
 
 
