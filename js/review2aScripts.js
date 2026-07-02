@@ -2,6 +2,7 @@ let chapterData={};
 let userAnswers=[];
 let questionCount=0;
 let activeChapter;
+let quizScore=0;
 
 function loadChapterData(data)
 {
@@ -33,6 +34,7 @@ function writeToStartQuizStatus(message)
 
 function chapterButton(chapter)
 {
+    quizScore=0;
     console.log("Chapter button",chapter);
     document.getElementById("selectedChapterIndicator").innerHTML=chapter;
     document.getElementById("summaryOutputArea").innerHTML='';
@@ -158,17 +160,51 @@ function runQuizQuestion()
 function endQuiz()
 {
     let outputSummary='';
+    let submitButton=
+    `
+        <button onclick="handleSubmitGrading()" id="gradingSubmitButton" class="submitButton">Submit Grading</button>
+    `;
+    
     for(let i=0;i<chapterData["questions"].length;i++)
     {
+        let correctionInput=
+        `
+            <input id="isCorrect${i}" class="isCorrect" type="checkbox"/>
+        `;
         outputSummary+=
         `
             <label>Question ${chapterData["questions"][i]["questionNo"]}</label>
             <p><strong>${chapterData["questions"][i]["questionText"]}</strong></p>
             <p>${userAnswers[i]["userAnswerText"]}</p>
             <p><i>${chapterData["answers"][i]["answerText"]}</i></p>
-
+            <label>Was your answer correct?</label>${correctionInput}</br></br>
         `;
     }
+    outputSummary+=submitButton;
+    document.getElementById("summaryOutputArea").innerHTML=outputSummary;
+}
+
+function handleSubmitGrading()
+{
+    console.log('Handle submit grading');
+    let gradesArray=[];
+    for(let i=0;i<10;i++)
+    {
+        let id="isCorrect"+i;
+        console.log("ID=",id);
+        let el=document.getElementById(id);
+        let grade=el.checked;
+        if (grade)
+        {
+            quizScore++;
+        }
+    }
+    let outputSummary=
+    `
+        <p>
+            Your final score for this chapter was ${quizScore} out of 10 review questions.
+        </p>
+    `;
     document.getElementById("summaryOutputArea").innerHTML=outputSummary;
 }
 

@@ -198,21 +198,21 @@ function printQuizQuestion(data)
     `
         
         <tr>
-            <td><h3>${questionText}</h3></td>
+            <td><h3>${questionText}${hasTwoAnswers?'(Answer two)':''}</h3></td>
         </tr>
         <tr>
-            <td><p>${a}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'a',${twoAnswers})">x</button></td>
+            <td><p><label>A: </label>${a}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'a',${twoAnswers})">x</button></td>
         
 
         </tr>
         <tr>
-             <td><p>${b}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'b',${twoAnswers})">x</button></td>
+             <td><p><label>B: </label>${b}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'b',${twoAnswers})">x</button></td>
         </tr>
         <tr>
-             <td><p>${c}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'c',${twoAnswers})">x</button></td>
+             <td><p><label>C: </label>${c}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'c',${twoAnswers})">x</button></td>
         </tr>
         <tr>
-             <td><p>${d}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'d',${twoAnswers})">x</button></td>
+             <td><p><label>D: </label>${d}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'d',${twoAnswers})">x</button></td>
         </tr>
     `;
     let questionCardContents=smallHeader+tableOpener+middleRows+tableCloser;
