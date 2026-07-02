@@ -343,30 +343,57 @@ function handleAnswer(data)
     console.log("Window has been answered",Window.hasBeenAnswered);
     let systemResponse='';
     let userChoice=data[0]["choice"];
+    let userChoice2=data[0]["choice2"];
     let answerLetter=data[0]["answerLetter"];
     let answer=data[0]["answer"];
+    let answerLetter2=data[0]["answerLetter2"];
     let nextButton=
     `
         <button id='quizNextButton' class='nextButton' onclick="handleNext()">Next</button>
     `
-   
-    if (userChoice===answerLetter && !Window.hasBeenAnswered)
+    if(answerLetter2)
     {
-        systemResponse="That's right! "+answer;
-        document.getElementById("answerOutputArea").innerHTML=systemResponse + '<br/>' + nextButton;
-        Window.hasBeenAnswered=true;
-        window.quizScore+=1;
-    }
-    else if (userChoice!=answerLetter && !Window.hasBeenAnswered)
-    {
-        systemResponse="No I'm afraid not, the correct answer is " + answerLetter + " " + answer + '<br/>' + nextButton;
-        document.getElementById("answerOutputArea").innerHTML=systemResponse;
-        Window.hasBeenAnswered=true;
+        console.log("Process for two answers");
+        console.log("userChoice",userChoice,"userChoice2",userChoice2,"answerLetter",answerLetter,"answerLetter2",answerLetter2);
+        if ( (userChoice==answerLetter && userChoice2 == answerLetter2) || (userChoice==answerLetter2 && userChoice2==answerLetter) )
+        {
+            console.log("It appears that both answer are correct");
+            systemResponse="That's right! "+answer;
+            document.getElementById("answerOutputArea").innerHTML=systemResponse + '<br/>' + nextButton;
+            Window.hasBeenAnswered=true;
+            window.quizScore+=1;
+        }
+        else 
+        {
+            console.log("Didn't get them both right");
+            systemResponse="No I'm afraid not, the correct answer is " + answerLetter + " " + answer + '<br/>' + nextButton;
+            document.getElementById("answerOutputArea").innerHTML=systemResponse;
+            Window.hasBeenAnswered=true;
+        }
     }
     else 
     {
-        
+        console.log("Process for one answer");
+        if (userChoice===answerLetter && !Window.hasBeenAnswered)
+        {
+            systemResponse="That's right! "+answer;
+            document.getElementById("answerOutputArea").innerHTML=systemResponse + '<br/>' + nextButton;
+            Window.hasBeenAnswered=true;
+            window.quizScore+=1;
+        }
+            else if (userChoice!=answerLetter && !Window.hasBeenAnswered)
+            {
+                systemResponse="No I'm afraid not, the correct answer is " + answerLetter + " " + answer + '<br/>' + nextButton;
+                document.getElementById("answerOutputArea").innerHTML=systemResponse;
+                Window.hasBeenAnswered=true;
+            }
+            else 
+            {
+                
+            }   
     }
+   
+    
 
    
     
