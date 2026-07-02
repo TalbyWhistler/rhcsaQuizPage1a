@@ -3,6 +3,10 @@ window.chapter=0;
 window.quizScore=0;
 window.hasBeenAnswered=false;
 
+let twoAnswers=true;
+let twoAnswerCount=0;
+let firstAnswer='';
+
 
 let activeChapter=0;
 
@@ -184,18 +188,18 @@ function printQuizQuestion(data)
             <td><h3>${questionText}</h3></td>
         </tr>
         <tr>
-            <td><p>${a}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'a')">x</button></td>
+            <td><p>${a}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'a',${twoAnswers})">x</button></td>
         
 
         </tr>
         <tr>
-             <td><p>${b}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'b')">x</button></td>
+             <td><p>${b}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'b',${twoAnswers})">x</button></td>
         </tr>
         <tr>
-             <td><p>${c}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'c')">x</button></td>
+             <td><p>${c}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'c',${twoAnswers})">x</button></td>
         </tr>
         <tr>
-             <td><p>${d}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'d')">x</button></td>
+             <td><p>${d}</p></td><td><button  onclick="answerButton(${chapter},${questionNumber},'d',${twoAnswers})">x</button></td>
         </tr>
     `;
     let questionCardContents=smallHeader+tableOpener+middleRows+tableCloser;
@@ -206,15 +210,42 @@ function printQuizQuestion(data)
 }
 
 
-function answerButton(chapter,questionNumber,choice)
+function answerButtonB(chapter,questionNumber,choice)
 {
-    console.log("Answer button ",chapter,":",questionNumber,"choice",choice);
-    quizCallBackend("fetchQuizAnswer",{chapter:chapter,questionNumber:questionNumber,choice:choice},handleAnswer);
-    console.log("Return to answer button");
+     console.log("Answer button ",chapter,":",questionNumber,"choice",choice);
+        quizCallBackend("fetchQuizAnswer",{chapter:chapter,questionNumber:questionNumber,choice:choice},handleAnswer);
+        console.log("Return to answer button");
     
-   // console.log("Answers",answerLetter + " " + choice);
-    
+   // console.log("Answers",answerLetter + " " + choice);   
 }
+
+function answerButton(chapter,questionNumber,choice,waitForSecond)
+{
+    if (!waitForSecond)
+    {
+        console.log("Answer button ",chapter,":",questionNumber,"choice",choice);
+        quizCallBackend("fetchQuizAnswer",{chapter:chapter,questionNumber:questionNumber,choice:choice},handleAnswer);
+        console.log("Return to answer button");
+        twoAnswerCount=0;
+    }
+    else if(waitForSecond && twoAnswerCount==0)
+    {
+       // twoAnswers=false;
+       console.log("Wait for second part 1",choice)
+        twoAnswerCount+=1;
+        firstAnswer=choice;
+    }
+    else if (waitForSecond && twoAnswerCount==1)
+    {
+        console.log("Wait for second part 2",choice);
+        console.log("fullchoice",firstAnswer+choice);
+        waitForSecond=false;
+        twoAnswerCount=0;
+        let fullChoice=firstAnswer+choice;
+        quizCallBackend("fetchQuizAnswer",{chapter:chapter,questionNumber:questionNumber,choice:fullChoice},handleAnswer);
+    }
+}
+
 
 function handleNext()
 {
