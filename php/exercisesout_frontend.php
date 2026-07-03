@@ -1,8 +1,12 @@
 <?php 
         include_once 'tools.php';
-        $title=createElement("h2","exercisesOutTitle","title","Exercises");
+        $title=createElement("h2","exercisesOutTitle","subtitle","Exercises");
          $scriptLink='<script src="js/exercisesoutScripts.js"></script>';
-        $subTitle=createElement("p","exercisesoutSubtitle","subtitle","Select one of the following exercises to run it step by step");
+        $subTitle=createElement("p","exercisesoutSubtitle","subHeading",
+        "
+            The RHCSA cert study guide contains many helpful exercises.   
+            Select one of the following exercises to run it step by step.
+        ");
         $buttonArea=createElement("p","exercisesoutButtonArea","buttonArea","");
         $buttonAreaContainer=createElement("div","eoButtonAreaContainer","buttonAreaContainer",$buttonArea);
 

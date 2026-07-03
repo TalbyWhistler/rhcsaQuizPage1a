@@ -42,7 +42,7 @@ function printAvailableFiguresForEdit(data)
     {
         console.log(data[i]["figure"]);
         outputButtons+=
-        `<button onClick="handleFigureButtons('${data[i]["figure"]}')">${data[i]["figure"]}|${data[i]["description"]}</button>`;
+        `<button class="chapterButton" onClick="handleFigureButtons('${data[i]["figure"]}')"><strong>${data[i]["figure"]}</strong>|${data[i]["description"]}</button>`;
     }
     document.getElementById("buttonOutputArea").innerHTML=outputButtons;
 }

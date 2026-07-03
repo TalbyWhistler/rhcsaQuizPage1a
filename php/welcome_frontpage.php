@@ -1,6 +1,6 @@
 <?php 
             include_once 'tools.php';
-        $subtitle=createElement('h3','welcomeSubtitle','subtitle','RHCSA Quiz and Study Page');
+        $subtitle=createElement('h2','welcomeSubtitle','subtitle','RHCSA Quiz and Study Page');
         $openBlurb=createElement('p','openBlurb','blurb',
         "
             Are you interested in a) becoming better at Linux? b) Studying for your Red Hat certs?  c) both of the above?   This page contains a number of quizzes, tests and labs that might help you with that!   

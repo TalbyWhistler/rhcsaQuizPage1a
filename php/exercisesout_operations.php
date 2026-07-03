@@ -3,7 +3,7 @@
 function fetchRecordsList()
 {
     include 'db_connect.php';
-    $stmt=$conn->prepare("select figure,title from exercisesmeta");
+    $stmt=$conn->prepare("select figure,title from exercisesmeta order by figure asc");
     $stmt->execute();
     $result=$stmt->get_result();
     $outputArray=[];
