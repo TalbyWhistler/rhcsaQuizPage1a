@@ -1,7 +1,8 @@
 let quizWrongCount=0;
 let numQuestions=0;
 let quizRightCount=0;
-
+let globalChapter=0;
+let globalFigure='';
 
 
 function initializeQuiz2()
@@ -10,6 +11,7 @@ function initializeQuiz2()
     quizRightCount=0;
     quizWrongCount=0;
     numQuestions=0;
+    
   //  document.getElementById("rightWrongStatus").innerHTML=quizWrongCount;
     attachStyleSheetQuiz2();
   //  callBackendQ2("fetchRecordsList",'',console.log);
@@ -46,6 +48,15 @@ function printAvailableFiguresForEdit(data)
     }
     document.getElementById("buttonOutputArea").innerHTML=outputButtons;
 }
+
+function setGlobals(figure)
+{
+    let chapter=Number(figure[0]);
+    console.log("Chapter ",chapter);
+    console.log("Figure",figure);
+}
+
+
 
 function handleFigureButtons(data)
 {
@@ -85,6 +96,8 @@ function printQuiz(data)
 
     let figure=data["metaData"][0]["figure"]; 
     let chapter=data["metaData"][0]["chapter"]; 
+    globalFigure=figure;
+    globalChapter=chapter;
     let description=data["metaData"][0]["description"];
     let value0Label=data["metaData"][0]["value0Label"];
     let value1Label=data["metaData"][0]["value1Label"];
@@ -319,6 +332,7 @@ function writeToRightWrong(correct)
         
         document.getElementById("rightWrongStatus").innerHTML="The quiz is over! You had "+quizWrongCount+" incorrect tries out of " + numQuestions + " questions";
         selectionArray.length=[];
+        callLeaderboard();    
         quizRightCount=0;
         quizWrongCount=0;
         document.getElementById("quizTableOutput").innerHTML='';
@@ -343,5 +357,35 @@ function callBackendQ2(inputFunction,parameters,callback)
     .then(data=>callback(data));
 }
 
+function callLeaderboard()
+{
+    console.log("Call leaderboard");
+    let eventCode='mt';
+    let score=quizRightCount-quizWrongCount>=0?quizRightCount-quizWrongCount:0;
+    let outputMessage=
+    `
+         Event code:${eventCode}
+         Chapter:${globalChapter}
+         Figure:${globalFigure}
+         Score:${score};
+         Number of Questions:${numQuestions}
 
+    `;
+    let params={'eventCode':eventCode,'chapter':globalChapter,'figure':globalFigure,'score':score,'outof':numQuestions};
+    let functionName='writeToLeaderboard';
+    let fetchTarget='php/leaderboard_control.php';
+    let inputPackage={'function':functionName,'params':params};
+    inputPackage=JSON.stringify(inputPackage);
+    fetch(fetchTarget,
+        {
+            method:'POST',
+            headers:{'Content-Type':'Application/json'},
+            body:inputPackage
+        }
+    )
+    .then(response=>response.json())
+    .then(data=>console.log(data));
+
+    //console.log(outputMessage);
+}
 initializeQuiz2();
