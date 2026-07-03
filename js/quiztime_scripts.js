@@ -9,6 +9,11 @@ let firstAnswer='';
 
 
 let activeChapter=0;
+let activeFigure='KnowAlready-'+activeChapter;
+let numQuestions=10;
+
+let globalScore=0;
+
 
 function quizTimeTesto()
 {
@@ -19,8 +24,10 @@ function quizTimeTesto()
 
 function handleTakeQuizButton()
 {
+    globalScore=0;
     const MAX_CHAPTER=6;
     let inputValue=activeChapter;
+    activeFigure='knowAlready-'+activeChapter;
     console.log("handle button // ",activeChapter);
     if (activeChapter<1)
     {
@@ -315,13 +322,15 @@ function handleSummary()
     document.getElementById("quizOutputArea").innerHTML=scoreOutputContents;
    // console.log("Score is ",Window.quizScore);
     console.log("Score is ",window.quizScore,"/10");
+    console.log("///// globals",globalScore,"/",numQuestions,"Chapter",activeChapter,"Figuretitle",activeFigure);
+    callLeaderboard();
 }
 
 
 function handleQuizReset()
 {
     console.log("Handle quiz reset");
-    
+    globalScore=0;
     window.questionCount=1;
     window.chapter=1;
     window.quizScore=0;
@@ -362,6 +371,7 @@ function handleAnswer(data)
             document.getElementById("answerOutputArea").innerHTML=systemResponse + '<br/>' + nextButton;
             Window.hasBeenAnswered=true;
             window.quizScore+=1;
+            globalScore+=1;
         }
         else 
         {
@@ -380,6 +390,7 @@ function handleAnswer(data)
             document.getElementById("answerOutputArea").innerHTML=systemResponse + '<br/>' + nextButton;
             Window.hasBeenAnswered=true;
             window.quizScore+=1;
+             globalScore+=1;
         }
             else if (userChoice!=answerLetter && !Window.hasBeenAnswered)
             {
@@ -392,13 +403,41 @@ function handleAnswer(data)
                 
             }   
     }
-   
-    
-
-   
-    
     
     console.log(systemResponse);
     setTimeout(() => {return},3000);
 }
+
+function callLeaderboard()
+{
+    console.log("Call leaderboard");
+    let eventCode='ka';
+    let score=globalScore;
+    let outputMessage=
+    `
+         Event code:${eventCode}
+         Chapter:${activeChapter}
+         Figure:${activeFigure}
+         Score:${score};
+         Number of Questions:${numQuestions}
+
+    `;
+    let params={'eventCode':eventCode,'chapter':activeChapter,'figure':activeFigure,'score':score,'outof':numQuestions};
+    let functionName='writeToLeaderboard';
+    let fetchTarget='php/leaderboard_control.php';
+    let inputPackage={'function':functionName,'params':params};
+    inputPackage=JSON.stringify(inputPackage);
+    fetch(fetchTarget,
+        {
+            method:'POST',
+            headers:{'Content-Type':'Application/json'},
+            body:inputPackage
+        }
+    )
+    .then(response=>response.json())
+    .then(data=>console.log(data));
+
+    //console.log(outputMessage);
+}
+
 
