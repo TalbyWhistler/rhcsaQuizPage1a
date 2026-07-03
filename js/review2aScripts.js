@@ -3,6 +3,8 @@ let userAnswers=[];
 let questionCount=0;
 let activeChapter;
 let quizScore=0;
+let numQuestions=10;
+let activeFigure='';
 
 function loadChapterData(data)
 {
@@ -43,6 +45,7 @@ function chapterButton(chapter)
     document.getElementById("answerSubmitIndicator").innerHTML='Ready';
     document.getElementById("startQuizStatusIndicator").innerHTML='Ready';
     activeChapter=chapter;
+    activeFigure='rq-'+activeChapter;
     questionCount=0;
     userAnswers=[];//////////////////////////////
     callBackendQa2("fetchQa",{chapter:chapter},loadChapterData);
@@ -206,6 +209,8 @@ function handleSubmitGrading()
         </p>
     `;
     document.getElementById("summaryOutputArea").innerHTML=outputSummary;
+    callLeaderboard();
+    //console.log("//////////////call leaderboard");
 }
 
 
@@ -218,6 +223,38 @@ function runQuizQuestions()
         console.log("question count",questionCount);
         runQuizQuestion();
     }
+}
+
+function callLeaderboard()
+{
+    console.log("Call leaderboard");
+    let eventCode='rq';
+    let score=quizScore;
+    let outputMessage=
+    `
+         Event code:${eventCode}
+         Chapter:${activeChapter}
+         Figure:${activeFigure}
+         Score:${score};
+         Number of Questions:${numQuestions}
+
+    `;
+    let params={'eventCode':eventCode,'chapter':activeChapter,'figure':activeFigure,'score':score,'outof':numQuestions};
+    let functionName='writeToLeaderboard';
+    let fetchTarget='php/leaderboard_control.php';
+    let inputPackage={'function':functionName,'params':params};
+    inputPackage=JSON.stringify(inputPackage);
+    fetch(fetchTarget,
+        {
+            method:'POST',
+            headers:{'Content-Type':'Application/json'},
+            body:inputPackage
+        }
+    )
+    .then(response=>response.json())
+    .then(data=>console.log(data));
+
+    //console.log(outputMessage);
 }
 
 rq2ainit();

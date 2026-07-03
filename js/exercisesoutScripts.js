@@ -3,6 +3,8 @@ let stepsArray=[];
 let stepCount=0;
 let globalFigure='';
 let globalTitle='';
+let numQuestions=1;
+let globalChapter=0;
 
 
 function exercisesOutInit()
@@ -190,6 +192,7 @@ function endExercise()
     let outputMessage=`Congratulations.  You have completed the exercises for figure ${globalFigure} ${globalTitle}`;
      document.getElementById("stepsOutputArea").innerHTML=outputMessage;
     document.getElementById("nextButtonsOutput").innerHTML='';
+    callLeaderboard();
 
 }
 
@@ -210,6 +213,38 @@ function callBackendExOut(functionName,params,callback)
     )
     .then(response=>response.json())
     .then(data=>callback(data));
+}
+
+function callLeaderboard()
+{
+    console.log("Call leaderboard");
+    let eventCode='ex';
+    let score=1
+    let outputMessage=
+    `
+         Event code:${eventCode}
+         Chapter:${Number(globalFigure[0])}
+         Figure:${globalFigure}
+         Score:${score}
+         Number of Questions:${numQuestions}
+
+    `;
+    let params={'eventCode':eventCode,'chapter':Number(globalFigure[0]),'figure':globalFigure,'score':score,'outof':numQuestions};
+    let functionName='writeToLeaderboard';
+    let fetchTarget='php/leaderboard_control.php';
+    let inputPackage={'function':functionName,'params':params};
+    inputPackage=JSON.stringify(inputPackage);
+    fetch(fetchTarget,
+        {
+            method:'POST',
+            headers:{'Content-Type':'Application/json'},
+            body:inputPackage
+        }
+    )
+    .then(response=>response.json())
+    .then(data=>console.log(data));
+
+    //console.log(outputMessage);
 }
 
 exercisesOutInit();
