@@ -1,12 +1,12 @@
 <?php 
         include_once 'tools.php';
-        $title=createElement('h1','rq2Title','title','Review Questions');
+        $title=createElement('h2','rq2Title','subtitle','Review Questions');
         $scriptLink='<script src="js/review2aScripts.js"></script>';
         $buttons='<label>Chapters: </label>';
         for($i=1;$i<=24;$i++)
             {
                 $buttons=$buttons.
-                '<button id="chapterButton'.$i.'" onclick="chapterButton('.$i.')">'.$i.'</button>';
+                '<button class="chapterButton" id="chapterButton'.$i.'" onclick="chapterButton('.$i.')">'.$i.'</button>';
             };
 
         $selectedChapterIndicator=createElement('label','selectedChapterIndicator','statusIndicator','None');

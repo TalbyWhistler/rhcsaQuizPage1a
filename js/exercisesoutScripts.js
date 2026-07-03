@@ -1,7 +1,8 @@
 let metadataObject={};
 let stepsArray=[];
 let stepCount=0;
-
+let globalFigure='';
+let globalTitle='';
 
 
 function exercisesOutInit()
@@ -31,7 +32,7 @@ function attachStylesheet()
 
 function printButtons(data)
 {
-    console.log(data)
+  //  console.log(data)
     let buttonContent='';
     for(let i=0;i<data.length;i++)
     {
@@ -39,15 +40,17 @@ function printButtons(data)
         let title=data[i]["title"];
         let button=
         `
-            <button onClick="handleChoiceButton('${figure}')">${figure}${title?'|'+title:''}</button>
+            <button class="chapterButton" onClick="handleChoiceButton('${figure}','${title}')"><strong>${figure}</strong>${title?'|'+title:''}</button>
         `;
         buttonContent+=button;
     }
     document.getElementById("exercisesoutButtonArea").innerHTML=buttonContent;
 }
 
-function handleChoiceButton(figure)
+function handleChoiceButton(figure,title)
 {
+    globalFigure=figure;
+    globalTitle=title;
     stepsArray=[];
     stepCount=0;
     document.getElementById("headerOutputArea").innerHTML='';
@@ -63,8 +66,8 @@ function loadAndPrint(data)
 {
     let dat=data["data"];
     let met=data["metaData"];
-    console.log("data",dat);
-    console.log("met",met[0]);
+  //  console.log("data",dat);
+  //  console.log("met",met[0]);
     let figure=met[0]["figure"];
     let title=met[0]["title"];
     let description=met[0]["description"];
@@ -115,7 +118,7 @@ function printSteps()
     for(let i=0;i<stepCount;i++)
     {
 
-        console.log(stepsArray[i]);
+      //  console.log(stepsArray[i]);
         let stepNumber=stepsArray[i]["stepNumber"];
         let stepText=stepsArray[i]["stepText"];
         tableRows+=
@@ -175,6 +178,19 @@ function handleForwardButton()
         stepCount++;
         printSteps();
     }
+    else 
+    {
+        endExercise();
+    }
+}
+
+function endExercise()
+{
+    console.log("End of exercise");
+    let outputMessage=`Congratulations.  You have completed the exercises for figure ${globalFigure} ${globalTitle}`;
+     document.getElementById("stepsOutputArea").innerHTML=outputMessage;
+    document.getElementById("nextButtonsOutput").innerHTML='';
+
 }
 
 

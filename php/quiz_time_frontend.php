@@ -73,7 +73,7 @@ function cb($id,$class,$function,$inner)
     
 
     $chapterChoiceBox=ce('div','chapterChoiceBox','panelBox',$choiceBoxContents);
-    $title=ce('h1','quizTimeTitle','title','Do I know this already?');
+    $title=ce('h2','quizTimeTitle','subtitle','Do I know this already?');
     $subTitle=ce('p','kaSubheading','subHeading','Each chapter of the RHCSA study guide has a multiple choice quiz preceding it to gauge the knowleage you already have.  Try it out!');
     $quizOutput=ce('p','quizOutputArea','outputArea','');
     $answerOutput=ce('p','answerOutputArea','outputArea','');
