@@ -3,7 +3,7 @@
 function fetchRecordsList()
 {
     include 'db_connect.php';
-    $stmt=$conn->prepare("select figure,uuid,description from memorymeta");
+    $stmt=$conn->prepare("select figure,uuid,description from memorymeta order by figure asc");
     $outputArray=[];
     $outputMessage='no action';
     if ($stmt->execute())
