@@ -1,13 +1,15 @@
 <?php 
     /*
-    create table leaderboard(
+ create table leaderboard(
     chapter int,
     figuretitle varchar(20),
     code varchar(2),
     score int,
-    outof int
-    
-    );
+    outof int,
+    ip varchar(20),
+    dateof date,
+    timeof time,
+    uuid int AUTO_INCREMENT PRIMARY KEY);
 
     */
 
