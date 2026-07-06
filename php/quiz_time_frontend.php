@@ -39,7 +39,7 @@ function cb($id,$class,$function,$inner)
     $statusIndicatorBox=ce('div','takeQuizStatusIndicatorBox','statusIndicatorBox',$takeQuizStatusIndicator);
     
     $chapterButtons='';
-    for($i=1;$i<=24;$i++)
+    for($i=1;$i<=25;$i++)
         {
             $chapterButtons=$chapterButtons.
             "
@@ -47,8 +47,8 @@ function cb($id,$class,$function,$inner)
             ";
         };
 
-    $chapterIndicator=createElement("label","chapterIndicator","statusIndicator",'None');
-    $chapterIndicatorLabel=createElement("label","chapterIndicatorLabel","label","Current Chapter:");
+    $chapterIndicator=ce("label","chapterIndicator","statusIndicator",'None');
+    $chapterIndicatorLabel=ce("label","chapterIndicatorLabel","label","Current Chapter:");
 
         /*
     $choiceBoxContents=''
