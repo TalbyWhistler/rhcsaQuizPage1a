@@ -32,6 +32,12 @@ function fetchRecord()
 function printRecord(data)
 {
     console.log(data);
+    if (data.length==0)
+    {
+        let outputMessage='There is no record of exercises completed today from your IP address';
+        document.getElementById("recordOutputArea").innerHTML=outputMessage;
+        return
+    }
     let tableOpener=
     `
         <table id="recordTable" class="table"><tbody>
