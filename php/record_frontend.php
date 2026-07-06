@@ -1,6 +1,6 @@
 <?php 
         include_once 'tools.php';
-        $title=createElement('h1','recordTitle','title','Activity Record');
+        $title=createElement('h2','recordTitle','subtitle','Activity Record');
         $subheading=createElement('p','recordSubheading','subHeading',
         "
             These are all of the activities that you've completed today on the site based on your source ip address.   If you're not on your usual device, you can enter your home IP address below and transfer your progress there.

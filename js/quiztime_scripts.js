@@ -139,6 +139,7 @@ function kaChapterChoice(chapterIn)
 {
     console.log("kaChapter choice",chapterIn);
     activeChapter=chapterIn;
+    document.getElementById("quizOutputArea").innerHTML='';
     document.getElementById("chapterIndicator").innerHTML=chapterIn;
 }
 

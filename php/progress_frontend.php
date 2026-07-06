@@ -1,6 +1,6 @@
 <?php 
         include_once 'tools.php';
-        $title=createElement('h1','progressTitle','title','Progress');
+        $title=createElement('h2','progressTitle','subtitle','Progress');
         $scriptLink='<script src="js/progressScripts.js"></script>';
 
         $chapterActivity=createButton('chapterActivityButton','submitButton','handleChapterActivity','Activity');
