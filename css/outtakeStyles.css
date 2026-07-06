@@ -3,9 +3,22 @@ h1
     color:blue;
 }
 
-.title
+.title,.headerTitle
 {
     color:rgb(83, 174, 83);
+}
+.headerTitle
+{
+    font-size:48px;
+    padding:7px;
+    max-height:20px;
+    
+}
+
+#headerTitleDiv
+{
+    background-color: blue;
+    border-radius:2px;
 }
 
 body 
@@ -45,12 +58,13 @@ button
 {
     background-color: rgb(205, 205, 220);
     font-size:22px;
+    
 }
 
 .row 
 {
     display:flex;
-    width:100%;
+    
     
 }
 
@@ -68,6 +82,7 @@ button
     border-color:black;
     border-right-width:2px;
     border-right:solid;
-    
+    min-height:10px;
+    height:50px;
 
 }

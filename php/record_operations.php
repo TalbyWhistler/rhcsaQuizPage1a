@@ -60,6 +60,13 @@ function checkForIp($ipAddress)
             }
 }
 
+function fetchIpAddress()
+{
+    $remoteAddress=$_SERVER["REMOTE_ADDR"]??'';
+    return $remoteAddress;
+}
+
+
 function transferProgress($inputIpAddress)
 {
     include 'db_connect.php';
