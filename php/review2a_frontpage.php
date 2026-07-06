@@ -3,7 +3,7 @@
         $title=createElement('h2','rq2Title','subtitle','Review Questions');
         $scriptLink='<script src="js/review2aScripts.js"></script>';
         $buttons='<label>Chapters: </label>';
-        for($i=1;$i<=24;$i++)
+        for($i=1;$i<=25;$i++)
             {
                 $buttons=$buttons.
                 '<button class="chapterButton" id="chapterButton'.$i.'" onclick="chapterButton('.$i.')">'.$i.'</button>';
