@@ -4,7 +4,7 @@ function fetchRecord()
 {
     include 'db_connect.php';
     $ipAddr=$_SERVER["REMOTE_ADDR"]??'';
-    $stmt=$conn->prepare("SELECT * FROM LEADERBOARD WHERE IP=? order by dateof,timeof asc");
+    $stmt=$conn->prepare("SELECT * FROM LEADERBOARD WHERE IP=? and dateof=current_date order by dateof,timeof asc");
     $stmt->bind_param("s",$ipAddr);
     $outputMessage='';
     $outputArray=[];
@@ -30,6 +30,34 @@ function fetchRecord()
                 $outputMessage="Error executing statement.";
             }
     return $outputMessage;
+}
+
+
+function checkForIp($ipAddress)
+{
+    include 'db_connect.php';
+    $remoteAddress=$_SERVER["REMOTE_ADDR"]??'';
+    if($ipAddress==$remoteAddress)
+        {
+            return false;
+        }
+    $stmt=$conn->prepare("select count(*) as total from leaderboard where ip=?");
+    $stmt->bind_param("s",$ipAddress);
+    $stmt->execute();
+    
+    $result=$stmt->get_result();
+    while($row=$result->fetch_assoc())
+        {
+            $total=$row["total"];
+        }
+    if($total==0)
+        {
+            return false;
+        }
+        else 
+            {
+                return true;
+            }
 }
 
 

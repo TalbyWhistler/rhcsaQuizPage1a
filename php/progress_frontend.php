@@ -40,7 +40,7 @@
         $numberStackoutput=createElement('div','numberStackArea','outputArea','');
         $numberStackContainer=createElement('div','numberStackContainer','panelContainer',$numberStack);
 
-        $explanationIndicator=createElement('p','explanationIndicator','statusIndicator','');
+        $explanationIndicator=createElement('p','explanationIndicator','statusIndicator','Each of these grids can help you know where to go next.');
 
         $pageContents=
         "   

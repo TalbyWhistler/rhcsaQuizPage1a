@@ -17,6 +17,13 @@
                     //$outputMessage='fetch record controller';
                     break;
                 }
+            case("checkForIp"):
+                {
+                    $params=$jsonInput["params"];
+                    $inputAddress=$params["inputAddress"];
+                    $outputMessage=checkForIp($inputAddress);
+                    break;
+                }
         }
 
         echo json_encode($outputMessage);

@@ -7,7 +7,7 @@
     $memoryOption=createElement('div','tableButton','navButton','Memory Table Quizzes');
     $welcome=createElement('div','welcomeButton','navButton','Welcome');
      $labOutOption=createElement('div','chapterLabButton','navButton','Chapter Labs');
-     $recordOption=createElement('div','recordButton','navButton','Daily Records');
+     $recordOption=createElement('div','recordButton','navButton','Daily Record');
      $progressOption=createElement('div','progressButton','navButton','Progress');
 
     $navRowContents=
