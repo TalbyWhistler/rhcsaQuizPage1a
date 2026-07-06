@@ -1,10 +1,10 @@
 <?php
     //include 'tools.php';
-    $knowBeforeOption=createElement("div","knowBeforeOption","navButton","Do I know this already?");
-    $reviewQuestionOption=createElement("div","reviewQuizOption","navButton","Chapter Review Quizzes");
+    $knowBeforeOption=createElement("div","knowBeforeOption","navButton","Know Already");
+    $reviewQuestionOption=createElement("div","reviewQuizOption","navButton","Review Questions");
    // $reviewQuestionOption=createElement('div','reviewButton','navButton','Chapter Review Questions');
-    $exerciseOption=createElement('div','exerciseButton','navButton',"Run Exercises");
-    $memoryOption=createElement('div','tableButton','navButton','Memory Table Quizzes');
+    $exerciseOption=createElement('div','exerciseButton','navButton',"Exercises");
+    $memoryOption=createElement('div','tableButton','navButton','Memory Table');
     $welcome=createElement('div','welcomeButton','navButton','Welcome');
      $labOutOption=createElement('div','chapterLabButton','navButton','Chapter Labs');
      $recordOption=createElement('div','recordButton','navButton','Daily Record');
