@@ -1,10 +1,23 @@
 function recordsInit()
 {
     console.log("Records");
+    
     attachStylesheet();
     fetchRecord();
+    fetchIp();
 }
 
+function fetchIp()
+{
+    console.log("Fetch ip address");
+    functionName="fetchIpAddress";
+    callBackend(functionName,'',writeIp)
+}
+
+function writeIp(ipAddress)
+{
+    document.getElementById("ipLabelOut").innerHTML=ipAddress;
+}
 
 function callBackend(functionName,functionParams,callback)
 {

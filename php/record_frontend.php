@@ -19,10 +19,15 @@
         ");
 
         $confirmOutput=createElement('p','confirmOutput','outputArea','');
+        $ipLabelOut=createElement('label','ipLabelOut','statusIndicator','');
+        $ipLabel=createElement('label','ipLabelLabel','statusIndicatorLabel','Current IP address (as far as we know) - ');
 
         $transferPanelContents=
         "
             $transferHeader
+            </br>
+            $ipLabel$ipLabelOut
+            </br> 
             $explano
             $ipInput
             

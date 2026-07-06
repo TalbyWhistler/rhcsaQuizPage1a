@@ -38,6 +38,12 @@
                         }
                     break;
                 }
+            case("fetchIpAddress"):
+                {
+                    
+                    $outputMessage=fetchIpAddress();
+                    break;
+                }
         }
 
         echo json_encode($outputMessage);
