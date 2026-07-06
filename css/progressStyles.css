@@ -1,0 +1,36 @@
+h1 
+{
+    color:red;
+}
+
+td
+{
+    text-align: center;
+    width:2.5rem;
+    height:2.5rem;
+    padding:2;
+    background:var(--cell-bg);
+    vertical-align:middle;
+    display:inline-block;
+}
+
+.numberStackTd
+{
+    border-width:1px;
+    border-color:rgb(245, 234, 234);
+    border-style:dotted;
+    border:top,left;
+}
+
+.stackNumber
+{
+    font-size:40px;
+    font-family:'calibri';
+    display:block;
+    
+}
+
+#stackNumber1
+{
+   
+}
