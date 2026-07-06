@@ -24,6 +24,20 @@
                     $outputMessage=checkForIp($inputAddress);
                     break;
                 }
+            case("transferProgress"):
+                {
+                    $params=$jsonInput["params"];
+                    $inputAddress=$params["inputAddress"];
+                    if(transferProgress($inputAddress))
+                        {
+                            $outputMessage="Progress transfered";
+                        }
+                    else 
+                        {
+                            $outputMessage="Error transferring progress";
+                        }
+                    break;
+                }
         }
 
         echo json_encode($outputMessage);

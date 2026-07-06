@@ -60,6 +60,24 @@ function checkForIp($ipAddress)
             }
 }
 
+function transferProgress($inputIpAddress)
+{
+    include 'db_connect.php';
+    $remoteAddress=$_SERVER["REMOTE_ADDR"]??'';
+    
+    $stmt=$conn->prepare(" 
+                update leaderboard
+                set ip=?
+                where dateof=CURRENT_DATE and ip=?");
+    $stmt->bind_param("ss",$inputIpAddress,$remoteAddress);
+        if($stmt->execute())
+            {
+                return true;
+            }
+            else 
+                return false;
+};
+
 
 
 ?>

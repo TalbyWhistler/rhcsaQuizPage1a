@@ -83,6 +83,10 @@ function attachStylesheet()
 function writeToSubmitIpIndicator(message)
 {
     document.getElementById("ipStatusIndicator").innerHTML=message;
+    if (message=="Progress Transfered")
+    {
+        fetchRecord();
+    }
 }
 
 
@@ -132,9 +136,14 @@ function afterIpInput(data)
     }
 }
 
-function handleConfirm()
+function handleConfirm(ipInput)
 {
-    console.log("Handle confirm");
+    console.log("Handle confirm",ipInput);
+    let params={'inputAddress':ipInput};
+    let functionName="transferProgress";
+    callBackend(functionName,params,writeToSubmitIpIndicator);
+    document.getElementById("confirmOutput").innerHTML='';
+
     // must still write the confirm that changes the ip address over ot the other one 
 }
 
