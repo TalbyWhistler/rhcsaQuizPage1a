@@ -5,12 +5,23 @@ let activeChapter;
 let quizScore=0;
 let numQuestions=10;
 let activeFigure='';
+let chapterHasData=true;
 
 function loadChapterData(data)
 {
     chapterData=data;
     console.log(chapterData);
-   
+    console.log('//////////////////////////')
+    console.log(chapterData["questions"].length);
+    if (chapterData["questions"].length>0)
+    {
+        chapterHasData=true;
+    }
+    else 
+    {
+        chapterHasData=false;
+    }
+    console.log("Chapter has data ",chapterHasData);
    // console.log(chapterData["questions"][0])
 }
 
@@ -36,6 +47,7 @@ function writeToStartQuizStatus(message)
 
 function chapterButton(chapter)
 {
+    
     quizScore=0;
     console.log("Chapter button",chapter);
     document.getElementById("selectedChapterIndicator").innerHTML=chapter;
@@ -48,6 +60,8 @@ function chapterButton(chapter)
     activeFigure='rq-'+activeChapter;
     questionCount=0;
     userAnswers=[];//////////////////////////////
+    chapterData={};
+    userAnswers=[];
     callBackendQa2("fetchQa",{chapter:chapter},loadChapterData);
 }
 
@@ -57,6 +71,10 @@ function handleStartQuiz()
     if(!activeChapter)
     {
         writeToStartQuizStatus("No chapter selected");
+    }
+    else if (!chapterHasData)
+    {
+        writeToStartQuizStatus(`The review question for chapter ${activeChapter} are not available at this time.`)
     }
     else 
     {
@@ -146,6 +164,7 @@ function printQuizQuestion()
 function runQuizQuestion()
 {
    
+    
     if (questionCount<chapterData["questions"].length)
     {
        // console.log("Run quiz question ")
@@ -185,6 +204,8 @@ function endQuiz()
     }
     outputSummary+=submitButton;
     document.getElementById("summaryOutputArea").innerHTML=outputSummary;
+    chapterData={};
+    userAnswers=[];
 }
 
 function handleSubmitGrading()

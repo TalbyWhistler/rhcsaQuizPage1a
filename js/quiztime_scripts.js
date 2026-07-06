@@ -25,7 +25,7 @@ function quizTimeTesto()
 function handleTakeQuizButton()
 {
     globalScore=0;
-    const MAX_CHAPTER=6;
+    const MAX_CHAPTER=25;
     let inputValue=activeChapter;
     activeFigure='knowAlready-'+activeChapter;
     console.log("handle button // ",activeChapter);
@@ -35,7 +35,8 @@ function handleTakeQuizButton()
     }
     else if (activeChapter>MAX_CHAPTER)
     {
-        document.getElementById("takeQuizStatusIndicator").innerHTML="Chapter not available";
+        document.getElementById("takeQuizStatusIndicator").innerHTML=`Chapter ${activeChapter} not available at this time.`;
+        setTimeout(function(){document.getElementById("takeQuizStatusIndicator").innerHTML='Ready'},3000);
     }
     else 
     {
@@ -138,6 +139,7 @@ function kaChapterChoice(chapterIn)
 {
     console.log("kaChapter choice",chapterIn);
     activeChapter=chapterIn;
+    document.getElementById("quizOutputArea").innerHTML='';
     document.getElementById("chapterIndicator").innerHTML=chapterIn;
 }
 
@@ -145,7 +147,22 @@ function kaChapterChoice(chapterIn)
 function printQuizQuestion(data)
 {
    // console.log(data);
-    
+    if (data["questions"][0])
+        {
+            if (data.length==0)
+            {
+                document.getElementById("takeQuizStatusIndicator").innerHTML=`The quiz for chapter ${activeChapter} is not available at this time.`;
+                setTimeout(function(){document.getElementById("takeQuizStatusIndicator").innerHTML='Ready'},3000);
+                return;
+            }
+        } 
+        else 
+        {
+            document.getElementById("takeQuizStatusIndicator").innerHTML=`The quiz for chapter ${activeChapter} is not available at this time.`;
+            setTimeout(function(){document.getElementById("takeQuizStatusIndicator").innerHTML='Ready'},3000);
+            return;
+        }
+
     Window.hasBeenAnswered=false;
     document.getElementById("answerOutputArea").innerHTML='';
     let questionData=data["questions"];

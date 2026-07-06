@@ -1,6 +1,6 @@
 <?php 
         include_once 'tools.php';
-        $title=createElement('h1','labOutTitle','title','End of Chapter Labs');
+        $title=createElement('h2','labOutTitle','subtitle','End of Chapter Labs');
         $subHeading=createElement('p','labOutSubheading','subHeading',
         "
             Each of the chapters in the RHCSA certification study guide have a lab with steps to follow that relates to that chapter.   These labs are here and will be presented step by step.
@@ -13,7 +13,7 @@
 
 
         $buttons='';
-        for($i=1;$i<=24;$i++)
+        for($i=1;$i<=25;$i++)
             {
                 $buttons=$buttons.
                 "

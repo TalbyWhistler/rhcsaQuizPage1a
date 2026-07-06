@@ -1,0 +1,48 @@
+<?php 
+        include_once 'tools.php';
+        $title=createElement('h2','recordTitle','subtitle','Activity Record');
+        $subheading=createElement('p','recordSubheading','subHeading',
+        "
+            These are all of the activities that you've completed today on the site based on your source ip address.   If you're not on your usual device, you can enter your home IP address below and transfer your progress there.
+        ");
+        $scriptLink="<script src='js/recordScripts.js'></script>";
+        //$recordOutputbox="<textarea id='recordOutputbox' class='outputArea' rows='40' cols='60'></textarea>";
+        $recordOutputArea=createElement('p','recordOutputArea','outputArea','');
+
+        $transferHeader=createElement('strong','transferHeader','panelHeader','Progress Transfer');
+        $ipInput=createInput('ipInput','input');
+        $ipInputButton=createButton('ipInputButton','submitButton','handleIpInputButton','Submit IP Address');
+        $ipStatusIndicator=createElement('p','ipStatusIndicator','statusIndicator','Ready');
+        $explano=createElement('p','explanation','explanation',
+        "
+            If you know your home (or usual) IP address and would like to transfer today's progress (above) to your home progress you can enter your home ip address here.
+        ");
+
+        $confirmOutput=createElement('p','confirmOutput','outputArea','');
+
+        $transferPanelContents=
+        "
+            $transferHeader
+            $explano
+            $ipInput
+            
+            $ipInputButton
+            </br>
+            $ipStatusIndicator
+        ";        
+        $transferPanel=createElement('div','transferPanel','inputPanel',$transferPanelContents);
+
+        $pageContainerContents=
+        "   
+            $title
+            $subheading
+            $recordOutputArea
+            $scriptLink
+            $transferPanel
+            $confirmOutput
+        ";
+
+        $pageContainer=createElement('div','recordPageContainer','pageContainer',$pageContainerContents);
+        echo $pageContainer;
+
+?>
