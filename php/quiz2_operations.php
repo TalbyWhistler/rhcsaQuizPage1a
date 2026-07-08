@@ -34,7 +34,7 @@ function fetchDataAndMetadata($figure)
     $dataArray=[];
     
     //get metadata 
-    $stmt=$conn->prepare("select * from memoryMeta where figure = ?");
+    $stmt=$conn->prepare("select * from memorymeta where figure = ?");
     $stmt->bind_param("s",$figure);
     if ($stmt->execute())
         {
@@ -62,7 +62,7 @@ function fetchDataAndMetadata($figure)
         }
 
     // get data 
-    $stmt=$conn->prepare("select * from memoryEntries where figure = ?");
+    $stmt=$conn->prepare("select * from memoryentries where figure = ?");
     $stmt->bind_param("s",$figure);
     if ($stmt->execute())
         {

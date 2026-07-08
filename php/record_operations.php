@@ -4,7 +4,7 @@ function fetchRecord()
 {
     include 'db_connect.php';
     $ipAddr=$_SERVER["REMOTE_ADDR"]??'';
-    $stmt=$conn->prepare("SELECT * FROM LEADERBOARD WHERE IP=? and dateof=current_date order by dateof,timeof asc");
+    $stmt=$conn->prepare("SELECT * FROM leaderboard WHERE IP=? and dateof=current_date order by dateof,timeof asc");
     $stmt->bind_param("s",$ipAddr);
     $outputMessage='';
     $outputArray=[];
