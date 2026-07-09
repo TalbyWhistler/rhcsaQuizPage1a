@@ -37,6 +37,12 @@
                     $outputMessage=fetchScores();
                     break;
                 }
+            case("fetchCurrentAccount"):
+                {
+                    $outputMessage="Fetch current account control is working";
+                    $outputMessage=fetchCurrentAccount();
+                    break;
+                }
         }
         echo json_encode($outputMessage);
 ?>

@@ -127,4 +127,38 @@ function fetchScores()
     return $outputArray;
 }
 
+
+function fetchCurrentAccount()
+{
+    include 'db_connect.php';
+    $ip=$_SERVER["REMOTE_ADDR"];
+    $stmt=$conn->prepare("select REPLACE(REPLACE(CONCAT(ip,dateof),'.',''),'-','') as 'accountNo' from leaderboard where ip=? order by dateof asc limit 1");
+    $stmt->bind_param("s",$ip);
+    $outputArray=[];
+    if ($stmt->execute())
+        {
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $accountNo=$row["accountNo"];
+                    $unitArray=["accountNo"=>$accountNo];
+                    array_push($outputArray,$unitArray);
+                }
+            return $outputArray[0]["accountNo"];
+        }
+        else 
+            {
+                return 'error executing statement';
+            }
+
+
+
+
+
+    $outputMessage="fetch current account operations is working ip ".$ip;
+   // return $outputMessage;
+  //  $stmt=$conn->prepare("select uuid,ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId where ip = ? from leaderboard group by ip order by dateof asc");
+    
+}
+
 ?>

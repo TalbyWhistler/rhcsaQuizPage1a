@@ -1,6 +1,7 @@
 function progressInit()
 {
     console.log("Progress");
+    getCurrentAccount();
     attachStylesheet();
 }
 
@@ -26,7 +27,7 @@ function handleChapterActivity()
     let functionName="fetchActivity";
     let explanation=
     `
-        The activity grid is to indicate where you've been spending your time so far.
+        The activity grid is to indicate where you've been spending your time so in total on linuxLab.
     `;
     writeToExplanation(explanation);
     callBackend(functionName,'',paintNumbers);
@@ -125,5 +126,20 @@ function callBackend(functionName,functionParams,callback)
     .then(data=>callback(data));
 }
 
+function handleLoadProgressButton()
+{
+    console.log("Handle load progress button");
+    
+}
 
+
+function getCurrentAccount()
+{
+    console.log("Get current account");
+    callBackend("fetchCurrentAccount","",printCurrentAccount);
+}
+function printCurrentAccount(accountData)
+{
+    document.getElementById("currentProgressIndicator").innerHTML=accountData;
+}
 progressInit();

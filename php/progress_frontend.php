@@ -42,6 +42,22 @@
 
         $explanationIndicator=createElement('p','explanationIndicator','statusIndicator','Each of these grids can help you know where to go next.');
 
+        $loadProgressHeader=createElement('p','progressHeader','header','Load Progress');
+        $currentProgressLabel=createElement('label','currentProgressLabel','label','Currently showing progress for account|');
+        $currentProgress=createElement('label','currentProgressIndicator','statusIndicator','');
+
+        $loadProgressButton=createButton('loadProgressButton','submitButton','handleLoadProgressButton','Load Progress');
+        $loadProgressListoutput=createElement('p','loadProgressListoutput','outputArea','');
+        $loadPanelContents=
+        "
+            $loadProgressHeader
+            $currentProgressLabel$currentProgress 
+            </br>
+            $loadProgressButton
+            $loadProgressListoutput
+        ";
+        $loadPanel=createElement('div','loadPanel','inputPanel',$loadPanelContents);
+
         $pageContents=
         "   
             $title
@@ -50,6 +66,7 @@
             $buttonArea
             $numberStackContainer
             $explanationIndicator
+            $loadPanel
         ";
 
         $pageContainer=createElement('div','progressPageContainer','pageContainer',$pageContents);
