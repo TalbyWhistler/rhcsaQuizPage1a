@@ -1,3 +1,5 @@
+let globalIp='';
+
 function recordsInit()
 {
     console.log("Records");
@@ -54,11 +56,12 @@ function printProgressList(data)
 
 function uploadProgress(destinationIp,progressId)
 {
+    console.log("IP ALONE",destinationIp)
     console.log(destinationIp,progressId);
     let output=
     `
         <p> Upload today's progress to ${progressId} account?</p>
-        <button onclick="handleUploadCancel()">Cancel</button><button onclick="handleUploadConfirm('${progressId}')">Confirm</button>
+        <button onclick="handleUploadCancel()">Cancel</button><button onclick="handleUploadConfirm('${destinationIp}','${progressId}')">Confirm</button>
     `;
     document.getElementById("uploadConfirmOut").innerHTML=output;
     
@@ -77,6 +80,7 @@ function handleUploadCancel()
 function handleUploadConfirm(destinationIp,progressId)
 {
     console.log("UPload confirm to ",progressId);
+    console.log("Handle upload confirm to ip",destinationIp);
     handleConfirm(destinationIp);
     document.getElementById("uploadConfirmOut").innerHTML='';
     document.getElementById("progressListOut").innerHTML='';

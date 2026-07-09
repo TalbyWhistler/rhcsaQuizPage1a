@@ -113,6 +113,36 @@ function paintNumbers(data)
     }
 }
 
+function clearNumbers()
+{
+     for(let i=0;i<25;i++)
+    {
+        console.log(i);
+     //   let activityValue=data[i]*3;
+        let targetEl=document.getElementById(`stackNumber${i+1}`);
+        let tStyle=document.createElement("style");
+     //   let aValue=data[i];
+        tStyle.innerHTML=
+        `
+            #stackNumber${i+1}{
+             background-color:rgb(223, 223, 239,200);
+            color:rgb(0,0,0);
+            }
+        `;
+        /*
+
+        tStyle.innerHTML=
+        `
+             #stackNumber${i+1}{
+             background-color:rgb(224,${255-activityValue/2},${255-activityValue/2});
+            color:rgb(${activityValue},${activityValue},${activityValue});
+            }
+        `;
+        */
+        document.body.appendChild(tStyle);
+    }
+}
+
 function handleChapterCompletion()
 {
     console.log("fetch completion");
@@ -236,10 +266,21 @@ function printProgressList(data)
     document.getElementById("loadProgressListoutput").innerHTML=table;
 }
 
+function uploadProgress(ip,progressId)
+{
+    console.log('upload progress',ip,progressId);
+    document.getElementById("currentProgressIndicator").innerHTML=progressId;
+    globalFetchIp=ip;
+    clearNumbers();
+    
+
+}
+
 function handleBacktoLocal()
 {
     console.log("Back to local");
     getCurrentAccount();
+    clearNumbers();
 }
 
 progressInit();
