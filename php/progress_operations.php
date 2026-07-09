@@ -179,6 +179,65 @@ function fetchScoresByIp($ip)
     return $outputArray;
 }
 
+function fetchExposureByIp($ip)
+{
+    include 'db_connect.php';
+   // $ip=$_SERVER["REMOTE_ADDR"];
+    $outputArray=[];
+    for($i=1;$i<=25;$i++)
+        {
+            $chapterScore=0;
+            $stmt=$conn->prepare("select count(*) as total from leaderboard where ip=? and chapter=?");
+            $stmt->bind_param("si",$ip,$i);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $total=$row["total"];
+                    if ($total>0)
+                        {
+                             array_push($outputArray,100);
+                        }
+                    else 
+                        {
+                            array_push($outputArray,0);
+                        }
+                   
+                }
+        }
+    return $outputArray;
+}
+
+function fetchCompletionByIp($ip)
+{
+     include 'db_connect.php';
+  //  $ip=$_SERVER["REMOTE_ADDR"];
+    $outputArray=[];
+    $codeArray=['mt','ka','rq','ex','cl'];
+    for($i=1;$i<=25;$i++)
+        {
+            $chapterScore=0;
+            for($j=0;$j<4;$j++)
+                {
+                    $code=$codeArray[$j];
+                    $stmt=$conn->prepare("select count(*) as total from leaderboard where ip=? and chapter=? and code=?");
+                    $stmt->bind_param("sis",$ip,$i,$codeArray[$j]);
+                    $stmt->execute();
+                    $result=$stmt->get_result();
+                    while($row=$result->fetch_assoc())
+                        {
+                            $total=$row["total"];
+                            if ($total>0)
+                                {
+                                    $chapterScore=$chapterScore+20;
+                                }
+                        }
+                }
+            array_push($outputArray,$chapterScore);
+        }
+    return $outputArray;
+}
+
 
 function fetchCurrentAccount()
 {

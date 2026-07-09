@@ -4,8 +4,8 @@
         $scriptLink='<script src="js/progressScripts.js"></script>';
 
         $chapterActivity=createButton('chapterActivityButton','submitButton','handleChapterActivityByIp','Activity');
-        $chapterExposure=createButton('chapterExposureButton','submitButton','handleChapterExposure','Exposure');
-        $chapterCompletion=createButton('chapterCompletionButton','submitButton','handleChapterCompletion','Completion');
+        $chapterExposure=createButton('chapterExposureButton','submitButton','handleChapterExposureByIp','Exposure');
+        $chapterCompletion=createButton('chapterCompletionButton','submitButton','handleChapterCompletionByIp','Completion');
         $scores=createButton('scoresButton','submitButton','handleScoresByIp','Scores');
         $subHeading=createElement('p','progressSubheading','subHeading',
         "

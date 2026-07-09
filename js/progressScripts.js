@@ -124,6 +124,19 @@ function handleChapterCompletion()
     writeToExplanation(explanation);
 }
 
+function handleChapterCompletionByIp()
+{
+    let ip=globalFetchIp;
+    let params={'ip':ip};
+    callBackend("fetchCompletionByIp",params,paintNumbers);
+}
+
+function handleChapterExposureByIp()
+{
+    let ip=globalFetchIp;
+    let params={'ip':ip};
+    callBackend("fetchExposureByIp",params,paintNumbers);
+}
 
 function handleChapterExposure()
 {
