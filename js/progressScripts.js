@@ -129,9 +129,11 @@ function callBackend(functionName,functionParams,callback)
 function handleLoadProgressButton()
 {
     console.log("Handle load progress button");
+    callBackend("fetchOtherProgressList",'',printProgressList);
     
 }
 
+let globalFetchIp='';
 
 function getCurrentAccount()
 {
@@ -141,5 +143,64 @@ function getCurrentAccount()
 function printCurrentAccount(accountData)
 {
     document.getElementById("currentProgressIndicator").innerHTML=accountData;
+    fetchIpFromAccount(accountData);
+    
 }
+
+function fetchIpFromAccount(account)
+{
+    console.log("Fetch ip from account",account);
+    let params={'account':account};
+    callBackend("getIpWithAccount",params,setGlobalIpForViewing);
+}
+
+function setGlobalIpForViewing(data)
+{
+    globalFetchIp=data;
+    console.log("Global ip for viewing is ",data);
+}
+
+function printProgressList(data)
+{
+    console.log(data);
+    let tableOpen=
+    `
+        <table><tbody>
+    `;
+    let tableClose=
+    `
+        </tbody></table>
+    `;
+    let tableHeaders=
+    `
+        <tr>
+            <th>Accounts</th>
+        </tr>
+    `;
+    let tableRows='';
+    for(const i of data)
+    {
+        let ip=i["ip"];
+        let progressId=i["progressId"];
+        console.log(ip);
+        console.log(progressId);
+        tableRows+=
+        `
+            <tr>
+                <td>
+                    <button class="progButton" onclick="uploadProgress('${ip}','${progressId}')">${progressId}</button>
+                </td>
+            </tr>
+        `;
+    }
+    let table=tableOpen+tableHeaders+tableRows+tableClose;
+    document.getElementById("loadProgressListoutput").innerHTML=table;
+}
+
+function handleBacktoLocal()
+{
+    console.log("Back to local");
+    getCurrentAccount();
+}
+
 progressInit();

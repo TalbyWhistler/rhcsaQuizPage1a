@@ -46,14 +46,17 @@
         $currentProgressLabel=createElement('label','currentProgressLabel','label','Currently showing progress for account|');
         $currentProgress=createElement('label','currentProgressIndicator','statusIndicator','');
 
-        $loadProgressButton=createButton('loadProgressButton','submitButton','handleLoadProgressButton','Load Progress');
+        $loadProgressButton=createButton('loadProgressButton','submitButton','handleLoadProgressButton','Load Other Progress');
+        $backToLocalButton=createButton('backToLocalButton','submitButton','handleBacktoLocal','Return to local');
+
+
         $loadProgressListoutput=createElement('p','loadProgressListoutput','outputArea','');
         $loadPanelContents=
         "
             $loadProgressHeader
             $currentProgressLabel$currentProgress 
             </br>
-            $loadProgressButton
+            $loadProgressButton$backToLocalButton
             $loadProgressListoutput
         ";
         $loadPanel=createElement('div','loadPanel','inputPanel',$loadPanelContents);

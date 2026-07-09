@@ -43,6 +43,20 @@
                     $outputMessage=fetchCurrentAccount();
                     break;
                 }
+            case("fetchOtherProgressList"):
+                {
+                    $outputMessage="Fetch other progress control is working";
+                    $outputMessage=fetchOtherProgressList();
+                    break;
+                }
+            case("getIpWithAccount"):
+                {
+                    $outputMessage="Get ip with account info control is working";
+                    $params=$jsonInput["params"];
+                    $account=$params["account"];
+                    $outputMessage=getIpWithAccount($account);
+                    break;
+                }
         }
         echo json_encode($outputMessage);
 ?>

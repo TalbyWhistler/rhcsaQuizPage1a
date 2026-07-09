@@ -149,16 +149,59 @@ function fetchCurrentAccount()
         else 
             {
                 return 'error executing statement';
-            }
-
-
-
-
-
-    $outputMessage="fetch current account operations is working ip ".$ip;
-   // return $outputMessage;
-  //  $stmt=$conn->prepare("select uuid,ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId where ip = ? from leaderboard group by ip order by dateof asc");
-    
+            }    
 }
+
+function fetchOtherProgressList()
+{
+    include 'db_connect.php';
+    $outputArray=[];
+    $stmt=$conn->prepare("select uuid,ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId from leaderboard group by ip order by dateof asc");
+    if ($stmt->execute())
+        {
+            //return 'Statement executed.';
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $uuid=$row["uuid"];
+                    $ip=$row["ip"];
+                    $progressId=$row["progressId"];
+                    $unitArray=['uuid'=>$uuid,'ip'=>$ip,'progressId'=>$progressId];
+                    array_push($outputArray,$unitArray);
+                }
+            return $outputArray;
+        }
+        else 
+            {
+                return 'Error executing statement.';
+            }
+}
+
+
+function getIpWithAccount($account)
+{
+    include 'db_connect.php';
+    $outputMessage='get ip with account operations is working account is '.$account;
+    $stmt=$conn->prepare("select *
+from (
+select uuid,ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId from leaderboard  group by ip order by dateof asc) t
+where t.progressId=?");
+    $stmt->bind_param("s",$account);
+    if ($stmt->execute())
+        {
+          //  return 'statement executed';
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $ip=$row["ip"];
+                    return $ip;
+                }
+        }
+        else 
+            {
+                return 'error executing statement';
+            }
+}
+
 
 ?>
