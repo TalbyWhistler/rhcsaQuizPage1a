@@ -1,3 +1,6 @@
+let globalFetchIp='';
+
+
 function progressInit()
 {
     console.log("Progress");
@@ -31,6 +34,29 @@ function handleChapterActivity()
     `;
     writeToExplanation(explanation);
     callBackend(functionName,'',paintNumbers);
+}
+
+function handleChapterActivityByIp()
+{
+    let explanation=
+    `
+        The activity grid is to indicate where you've been spending your time so in total on linuxLab.
+    `;
+    writeToExplanation(explanation);
+    let functionName="fetchActivityByIp";
+    let params={'ip':globalFetchIp};
+    callBackend(functionName,params,paintNumbers);
+}
+
+function handleScoresByIp()
+{
+    console.log("Scores button");
+    let explanation=
+    `
+        This grid will get transformed based on your average scores per chapter.   Untouched chapters get a 0 score to start.
+    `;
+    writeToExplanation(explanation);
+    callBackend("fetchScoresByIp",{'ip':globalFetchIp},paintNumbers);
 }
 
 
@@ -133,7 +159,7 @@ function handleLoadProgressButton()
     
 }
 
-let globalFetchIp='';
+
 
 function getCurrentAccount()
 {

@@ -3,10 +3,10 @@
         $title=createElement('h2','progressTitle','subtitle','Progress');
         $scriptLink='<script src="js/progressScripts.js"></script>';
 
-        $chapterActivity=createButton('chapterActivityButton','submitButton','handleChapterActivity','Activity');
+        $chapterActivity=createButton('chapterActivityButton','submitButton','handleChapterActivityByIp','Activity');
         $chapterExposure=createButton('chapterExposureButton','submitButton','handleChapterExposure','Exposure');
         $chapterCompletion=createButton('chapterCompletionButton','submitButton','handleChapterCompletion','Completion');
-        $scores=createButton('scoresButton','submitButton','handleScoresButton','Scores');
+        $scores=createButton('scoresButton','submitButton','handleScoresByIp','Scores');
         $subHeading=createElement('p','progressSubheading','subHeading',
         "
             This grid represents the 25 chapters in the RHCSA certification study guide, the objective of the game is to fill in all of the various grids.

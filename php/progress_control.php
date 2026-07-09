@@ -57,6 +57,24 @@
                     $outputMessage=getIpWithAccount($account);
                     break;
                 }
+            case("fetchActivityByIp"):
+                {
+                   
+                    $params=$jsonInput["params"];
+                    $ip=$params["ip"];
+                    $outputMessage="fetch activity by ip is working";
+                    $outputMessage=fetchActivityByIp($ip);
+                    break;
+                }
+            case("fetchScoresByIp"):
+                {
+                    $params=$jsonInput["params"];
+                    $ip=$params["ip"];
+                    $outputMessage="fetch activity by ip is working";
+                    $outputMessage=fetchScoresByIp($ip);
+                    break;
+                }
+                ////////// must also complete exposure and completion by ip
         }
         echo json_encode($outputMessage);
 ?>

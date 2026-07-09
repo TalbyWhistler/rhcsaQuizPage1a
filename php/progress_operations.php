@@ -29,6 +29,35 @@ function fetchActivity()
             }
 }
 
+function fetchActivityByIp($ip)
+{
+    include 'db_connect.php';
+  //  $ip=$_SERVER["REMOTE_ADDR"];
+    $outputMessage="Fetch activity operations is working $ip";
+
+    $outputArray=[];
+    for($i=1;$i<=25;$i++)
+        {
+            $stmt=$conn->prepare("select count(*) as total from leaderboard where ip=? and chapter=?");
+            $stmt->bind_param("si",$ip,$i);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $chapterCount=$row["total"];
+                    array_push($outputArray,$chapterCount*5);
+                }
+        }
+    if ($outputArray)
+        {
+            return $outputArray;
+        }
+        else 
+            {
+                    return $outputMessage;
+            }
+}
+
 
 function fetchActivityTest()
 {
@@ -115,6 +144,29 @@ function fetchScores()
             $chapterTally=0;
             $stmt=$conn->prepare("select avg(score/outof)*100 as 'avg' from leaderboard where chapter=?");
             $stmt->bind_param("i",$i);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $average=$row["avg"]?$row["avg"]:0;
+                    array_push($outputArray,$average);
+
+                }
+        }
+    return $outputArray;
+}
+
+
+function fetchScoresByIp($ip)
+{
+     include 'db_connect.php';
+    $ip=$_SERVER["REMOTE_ADDR"];
+    $outputArray=[];
+    for($i=1;$i<=25;$i++)
+        {
+            $chapterTally=0;
+            $stmt=$conn->prepare("select avg(score/outof)*100 as 'avg' from leaderboard where chapter=? and ip=?");
+            $stmt->bind_param("is",$i,$ip);
             $stmt->execute();
             $result=$stmt->get_result();
             while($row=$result->fetch_assoc())
