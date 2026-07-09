@@ -74,9 +74,12 @@ function handleUploadCancel()
 
 }
 
-function handleUploadConfirm(progressId)
+function handleUploadConfirm(destinationIp,progressId)
 {
     console.log("UPload confirm to ",progressId);
+    handleConfirm(destinationIp);
+    document.getElementById("uploadConfirmOut").innerHTML='';
+    document.getElementById("progressListOut").innerHTML='';
 }
 
 function fetchIp()
@@ -173,7 +176,7 @@ function attachStylesheet()
 
 function writeToSubmitIpIndicator(message)
 {
-    document.getElementById("ipStatusIndicator").innerHTML=message;
+    document.getElementById("uploadDailyIndicator").innerHTML=message;
     if (message=="Progress Transfered")
     {
         fetchRecord();

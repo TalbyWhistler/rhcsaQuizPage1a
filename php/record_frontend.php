@@ -28,12 +28,8 @@
             </br>
             $ipLabel$ipLabelOut
             </br> 
-            $explano
-            $ipInput
+           
             
-            $ipInputButton
-            </br>
-            $ipStatusIndicator
         ";        
         $transferPanel=createElement('div','transferPanel','inputPanel',$transferPanelContents);
         $progressListOut=createElement('p','progressListOut','outputArea','');
