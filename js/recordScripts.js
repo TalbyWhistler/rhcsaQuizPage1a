@@ -4,7 +4,7 @@ function recordsInit()
     
     attachStylesheet();
     fetchRecord();
-    fetchProgressList();
+   // 
     fetchIp();
 }
 
@@ -43,7 +43,7 @@ function printProgressList(data)
         `
             <tr>
                 <td>
-                    <button class="progButton" onclick="loadProgress('${ip}')">${progressId}</button>
+                    <button class="progButton" onclick="uploadProgress('${ip}','${progressId}')">${progressId}</button>
                 </td>
             </tr>
         `;
@@ -52,10 +52,31 @@ function printProgressList(data)
     document.getElementById("progressListOut").innerHTML=table;
 }
 
-function loadProgress(ip)
+function uploadProgress(destinationIp,progressId)
 {
-    console.log(ip);
-    handleConfirm(ip);
+    console.log(destinationIp,progressId);
+    let output=
+    `
+        <p> Upload today's progress to ${progressId} account?</p>
+        <button onclick="handleUploadCancel()">Cancel</button><button onclick="handleUploadConfirm('${progressId}')">Confirm</button>
+    `;
+    document.getElementById("uploadConfirmOut").innerHTML=output;
+    
+}
+
+function handleUploadCancel()
+{
+    console.log("Handle upload cancel");
+    document.getElementById("uploadConfirmOut").innerHTML='';
+    document.getElementById("progressListOut").innerHTML='';
+    document.getElementById("uploadDailyIndicator").innerHTML='Cancelled';
+    setTimeout(()=>{document.getElementById("uploadDailyIndicator").innerHTML='Ready'},3000);
+
+}
+
+function handleUploadConfirm(progressId)
+{
+    console.log("UPload confirm to ",progressId);
 }
 
 function fetchIp()
@@ -221,6 +242,13 @@ function handleCancel()
 {
     console.log("Handle cancel");
     document.getElementById("confirmOutput").innerHTML='';
+}
+
+
+function handleUploadProgressButton()
+{
+    console.log("Handle progress upload");
+    fetchProgressList();
 }
 
 recordsInit();
