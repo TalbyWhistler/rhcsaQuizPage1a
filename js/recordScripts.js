@@ -4,13 +4,64 @@ function recordsInit()
     
     attachStylesheet();
     fetchRecord();
+    fetchProgressList();
     fetchIp();
+}
+
+function fetchProgressList()
+{
+    console.log("/// Fetch Progress //// ");
+    let functionName="fetchProgressList";
+    callBackend(functionName,'',printProgressList);
+}
+
+function printProgressList(data)
+{
+    console.log(data);
+    let tableOpen=
+    `
+        <table><tbody>
+    `;
+    let tableClose=
+    `
+        </tbody></table>
+    `;
+    let tableHeaders=
+    `
+        <tr>
+            <th>Accounts</th>
+        </tr>
+    `;
+    let tableRows='';
+    for(const i of data)
+    {
+        let ip=i["ip"];
+        let progressId=i["progressId"];
+        console.log(ip);
+        console.log(progressId);
+        tableRows+=
+        `
+            <tr>
+                <td>
+                    <button class="progButton" onclick="loadProgress('${ip}')">${progressId}</button>
+                </td>
+            </tr>
+        `;
+    }
+    let table=tableOpen+tableHeaders+tableRows+tableClose;
+    document.getElementById("progressListOut").innerHTML=table;
+}
+
+function loadProgress(ip)
+{
+    console.log(ip);
+    handleConfirm(ip);
 }
 
 function fetchIp()
 {
     console.log("Fetch ip address");
-    functionName="fetchIpAddress";
+    let functionName="fetchIpAddress";
     callBackend(functionName,'',writeIp)
 }
 

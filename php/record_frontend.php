@@ -36,7 +36,7 @@
             $ipStatusIndicator
         ";        
         $transferPanel=createElement('div','transferPanel','inputPanel',$transferPanelContents);
-
+        $progressListOut=createElement('p','progressListOut','outputArea','');
         $pageContainerContents=
         "   
             $title
@@ -45,6 +45,8 @@
             $scriptLink
             $transferPanel
             $confirmOutput
+            $progressListOut
+            
         ";
 
         $pageContainer=createElement('div','recordPageContainer','pageContainer',$pageContainerContents);
