@@ -39,9 +39,14 @@
                     break;
                 }
             case("fetchIpAddress"):
-                {
-                    
+                {   
                     $outputMessage=fetchIpAddress();
+                    break;
+                }
+            case("fetchProgressList"):
+                {
+                    //$outputMessage="Fetch progress list control works.";
+                    $outputMessage=fetchProgressList();
                     break;
                 }
         }

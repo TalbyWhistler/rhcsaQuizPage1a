@@ -1,16 +1,95 @@
+let globalIp='';
+
 function recordsInit()
 {
     console.log("Records");
     
     attachStylesheet();
     fetchRecord();
+   // 
     fetchIp();
+}
+
+function fetchProgressList()
+{
+    console.log("/// Fetch Progress //// ");
+    let functionName="fetchProgressList";
+    callBackend(functionName,'',printProgressList);
+}
+
+function printProgressList(data)
+{
+    console.log(data);
+    let tableOpen=
+    `
+        <table><tbody>
+    `;
+    let tableClose=
+    `
+        </tbody></table>
+    `;
+    let tableHeaders=
+    `
+        <tr>
+            <th>Accounts</th>
+        </tr>
+    `;
+    let tableRows='';
+    for(const i of data)
+    {
+        let ip=i["ip"];
+        let progressId=i["progressId"];
+        console.log(ip);
+        console.log(progressId);
+        tableRows+=
+        `
+            <tr>
+                <td>
+                    <button class="progButton" onclick="uploadProgress('${ip}','${progressId}')">${progressId}</button>
+                </td>
+            </tr>
+        `;
+    }
+    let table=tableOpen+tableHeaders+tableRows+tableClose;
+    document.getElementById("progressListOut").innerHTML=table;
+}
+
+function uploadProgress(destinationIp,progressId)
+{
+    console.log("IP ALONE",destinationIp)
+    console.log(destinationIp,progressId);
+    let output=
+    `
+        <p> Upload today's progress to ${progressId} account?</p>
+        <button onclick="handleUploadCancel()">Cancel</button><button onclick="handleUploadConfirm('${destinationIp}','${progressId}')">Confirm</button>
+    `;
+    document.getElementById("uploadConfirmOut").innerHTML=output;
+    
+}
+
+function handleUploadCancel()
+{
+    console.log("Handle upload cancel");
+    document.getElementById("uploadConfirmOut").innerHTML='';
+    document.getElementById("progressListOut").innerHTML='';
+    document.getElementById("uploadDailyIndicator").innerHTML='Cancelled';
+    setTimeout(()=>{document.getElementById("uploadDailyIndicator").innerHTML='Ready'},3000);
+
+}
+
+function handleUploadConfirm(destinationIp,progressId)
+{
+    console.log("UPload confirm to ",progressId);
+    console.log("Handle upload confirm to ip",destinationIp);
+    handleConfirm(destinationIp);
+    document.getElementById("uploadConfirmOut").innerHTML='';
+    document.getElementById("progressListOut").innerHTML='';
 }
 
 function fetchIp()
 {
     console.log("Fetch ip address");
-    functionName="fetchIpAddress";
+    let functionName="fetchIpAddress";
     callBackend(functionName,'',writeIp)
 }
 
@@ -101,7 +180,7 @@ function attachStylesheet()
 
 function writeToSubmitIpIndicator(message)
 {
-    document.getElementById("ipStatusIndicator").innerHTML=message;
+    document.getElementById("uploadDailyIndicator").innerHTML=message;
     if (message=="Progress Transfered")
     {
         fetchRecord();
@@ -170,6 +249,13 @@ function handleCancel()
 {
     console.log("Handle cancel");
     document.getElementById("confirmOutput").innerHTML='';
+}
+
+
+function handleUploadProgressButton()
+{
+    console.log("Handle progress upload");
+    fetchProgressList();
 }
 
 recordsInit();
