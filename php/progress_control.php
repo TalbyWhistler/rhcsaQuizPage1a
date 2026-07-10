@@ -37,6 +37,60 @@
                     $outputMessage=fetchScores();
                     break;
                 }
+            case("fetchCurrentAccount"):
+                {
+                    $outputMessage="Fetch current account control is working";
+                    $outputMessage=fetchCurrentAccount();
+                    break;
+                }
+            case("fetchOtherProgressList"):
+                {
+                    $outputMessage="Fetch other progress control is working";
+                    $outputMessage=fetchOtherProgressList();
+                    break;
+                }
+            case("getIpWithAccount"):
+                {
+                    $outputMessage="Get ip with account info control is working";
+                    $params=$jsonInput["params"];
+                    $account=$params["account"];
+                    $outputMessage=getIpWithAccount($account);
+                    break;
+                }
+            case("fetchActivityByIp"):
+                {
+                   
+                    $params=$jsonInput["params"];
+                    $ip=$params["ip"];
+                    $outputMessage="fetch activity by ip is working";
+                    $outputMessage=fetchActivityByIp($ip);
+                    break;
+                }
+            case("fetchScoresByIp"):
+                {
+                    $params=$jsonInput["params"];
+                    $ip=$params["ip"];
+                    $outputMessage="fetch activity by ip is working";
+                    $outputMessage=fetchScoresByIp($ip);
+                    break;
+                }
+            case("fetchExposureByIp"):
+                {
+                     $params=$jsonInput["params"];
+                    $ip=$params["ip"];
+                    $outputMessage="fetch activity by ip is working";
+                    $outputMessage=fetchExposureByIp($ip);
+                    break;
+                }
+            case("fetchCompletionByIp"):
+                {
+                    $params=$jsonInput["params"];
+                    $ip=$params["ip"];
+                    $outputMessage="fetch activity by ip is working";
+                    $outputMessage=fetchCompletionByIp($ip);
+                    break;
+                }
+                ////////// must also complete exposure and completion by ip
         }
         echo json_encode($outputMessage);
 ?>

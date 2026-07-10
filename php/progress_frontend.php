@@ -3,10 +3,10 @@
         $title=createElement('h2','progressTitle','subtitle','Progress');
         $scriptLink='<script src="js/progressScripts.js"></script>';
 
-        $chapterActivity=createButton('chapterActivityButton','submitButton','handleChapterActivity','Activity');
-        $chapterExposure=createButton('chapterExposureButton','submitButton','handleChapterExposure','Exposure');
-        $chapterCompletion=createButton('chapterCompletionButton','submitButton','handleChapterCompletion','Completion');
-        $scores=createButton('scoresButton','submitButton','handleScoresButton','Scores');
+        $chapterActivity=createButton('chapterActivityButton','submitButton','handleChapterActivityByIp','Activity');
+        $chapterExposure=createButton('chapterExposureButton','submitButton','handleChapterExposureByIp','Exposure');
+        $chapterCompletion=createButton('chapterCompletionButton','submitButton','handleChapterCompletionByIp','Completion');
+        $scores=createButton('scoresButton','submitButton','handleScoresByIp','Scores');
         $subHeading=createElement('p','progressSubheading','subHeading',
         "
             This grid represents the 25 chapters in the RHCSA certification study guide, the objective of the game is to fill in all of the various grids.
@@ -42,6 +42,25 @@
 
         $explanationIndicator=createElement('p','explanationIndicator','statusIndicator','Each of these grids can help you know where to go next.');
 
+        $loadProgressHeader=createElement('p','progressHeader','header','Load Progress');
+        $currentProgressLabel=createElement('label','currentProgressLabel','label','Currently showing progress for account|');
+        $currentProgress=createElement('label','currentProgressIndicator','statusIndicator','');
+
+        $loadProgressButton=createButton('loadProgressButton','submitButton','handleLoadProgressButton','Load Other Progress');
+        $backToLocalButton=createButton('backToLocalButton','submitButton','handleBacktoLocal','Return to local');
+
+
+        $loadProgressListoutput=createElement('p','loadProgressListoutput','outputArea','');
+        $loadPanelContents=
+        "
+            $loadProgressHeader
+            $currentProgressLabel$currentProgress 
+            </br>
+            $loadProgressButton$backToLocalButton
+            $loadProgressListoutput
+        ";
+        $loadPanel=createElement('div','loadPanel','inputPanel',$loadPanelContents);
+
         $pageContents=
         "   
             $title
@@ -50,6 +69,7 @@
             $buttonArea
             $numberStackContainer
             $explanationIndicator
+            $loadPanel
         ";
 
         $pageContainer=createElement('div','progressPageContainer','pageContainer',$pageContents);

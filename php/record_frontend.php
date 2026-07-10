@@ -28,14 +28,19 @@
             </br>
             $ipLabel$ipLabelOut
             </br> 
-            $explano
-            $ipInput
+           
             
-            $ipInputButton
-            </br>
-            $ipStatusIndicator
         ";        
         $transferPanel=createElement('div','transferPanel','inputPanel',$transferPanelContents);
+        $progressListOut=createElement('p','progressListOut','outputArea','');
+        $uploadProgressBlurb=createElement('label','uploadProgressBlurb','label',
+        "
+            You can upload any progress from today at your current IP address to your 'main account', which will be the IP address numbers and date of your first record activity.   
+        ");
+        $uploadProgressButton=createButton('uploadProgressButton','submitButton','handleUploadProgressButton','Upload Daily Progress');
+        $uploadProgressIndicator=createElement('p','uploadDailyIndicator','statusIndicator','Ready');
+        $uploadConfirm=createElement('p','uploadConfirmOut','outputArea','');
+
 
         $pageContainerContents=
         "   
@@ -45,6 +50,11 @@
             $scriptLink
             $transferPanel
             $confirmOutput
+            $uploadProgressBlurb$uploadProgressButton
+            $uploadProgressIndicator
+            $progressListOut
+            $uploadConfirm
+            
         ";
 
         $pageContainer=createElement('div','recordPageContainer','pageContainer',$pageContainerContents);
