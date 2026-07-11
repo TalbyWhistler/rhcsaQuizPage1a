@@ -85,6 +85,63 @@ function transferProgress($inputIpAddress)
                 return false;
 };
 
+function fetchProgressListB()
+{
+    include 'db_connect.php';
+    $outputArray=[];
+    $stmt=$conn->prepare("select uuid,ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId from leaderboard group by ip order by dateof asc");
+    if ($stmt->execute())
+        {
+            //return 'Statement executed.';
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $uuid=$row["uuid"];
+                    $ip=$row["ip"];
+                    $progressId=$row["progressId"];
+                    $unitArray=['uuid'=>$uuid,'ip'=>$ip,'progressId'=>$progressId];
+                    array_push($outputArray,$unitArray);
+                }
+            return $outputArray;
+        }
+        else 
+            {
+                return 'Error executing statement.';
+            }
+}
 
+function fetchProgressList()
+{
+    
+    
+    include 'db_connect.php';
+    $outputArray=[];
+    $ipListArray=[];
+    $stmt=$conn->prepare("select distinct ip from leaderboard");
+    $stmt->execute();
+    $result=$stmt->get_result();
+    while($row=$result->fetch_assoc())
+        {
+            $ipAddress=$row["ip"];
+            array_push($ipListArray,$ipAddress);
+        }
+    for($i=0;$i<sizeof($ipListArray);$i++)
+        {
+            $stmt=$conn->prepare("select dateof,uuid,ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId from leaderboard where ip =? order by dateof asc limit 1");
+            $stmt->bind_param("s",$ipListArray[$i]);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $date=$row["dateof"];
+                    $uuid=$row["uuid"];
+                    $ip=$row["ip"];
+                    $progressId=$row["progressId"];
+                    $unitArray=['uuid'=>$uuid,'ip'=>$ip,'progressId'=>$progressId];
+                    array_push($outputArray,$unitArray);
+                }
+        }
+    return $outputArray;
+}
 
 ?>

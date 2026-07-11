@@ -57,16 +57,28 @@ button
 .navButton 
 {
     background-color: rgb(205, 205, 220);
-    font-size:22px;
+    font-size:20px;
+    width:88px;
+    border-style:dotted;
+    border-width:1px;
+    border-bottom:1px;
     
 }
 
 .row 
 {
     display:flex;
-    width:100%;
+    
+    flex-wrap:wrap; 
     
 }
+
+.navBar.navButton
+{
+    flex:0 0 50;
+    
+}    
+
 
 .subtitle
 {

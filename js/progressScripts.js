@@ -1,6 +1,10 @@
+let globalFetchIp='';
+
+
 function progressInit()
 {
     console.log("Progress");
+    getCurrentAccount();
     attachStylesheet();
 }
 
@@ -26,10 +30,33 @@ function handleChapterActivity()
     let functionName="fetchActivity";
     let explanation=
     `
-        The activity grid is to indicate where you've been spending your time so far.
+        The activity grid is to indicate where you've been spending your time so in total on linuxLab.
     `;
     writeToExplanation(explanation);
     callBackend(functionName,'',paintNumbers);
+}
+
+function handleChapterActivityByIp()
+{
+    let explanation=
+    `
+        The activity grid is to indicate where you've been spending your time so in total on linuxLab.
+    `;
+    writeToExplanation(explanation);
+    let functionName="fetchActivityByIp";
+    let params={'ip':globalFetchIp};
+    callBackend(functionName,params,paintNumbers);
+}
+
+function handleScoresByIp()
+{
+    console.log("Scores button");
+    let explanation=
+    `
+        This grid will get transformed based on your average scores per chapter.   Untouched chapters get a 0 score to start.
+    `;
+    writeToExplanation(explanation);
+    callBackend("fetchScoresByIp",{'ip':globalFetchIp},paintNumbers);
 }
 
 
@@ -86,6 +113,36 @@ function paintNumbers(data)
     }
 }
 
+function clearNumbers()
+{
+     for(let i=0;i<25;i++)
+    {
+        console.log(i);
+     //   let activityValue=data[i]*3;
+        let targetEl=document.getElementById(`stackNumber${i+1}`);
+        let tStyle=document.createElement("style");
+     //   let aValue=data[i];
+        tStyle.innerHTML=
+        `
+            #stackNumber${i+1}{
+             background-color:rgb(223, 223, 239,200);
+            color:rgb(0,0,0);
+            }
+        `;
+        /*
+
+        tStyle.innerHTML=
+        `
+             #stackNumber${i+1}{
+             background-color:rgb(224,${255-activityValue/2},${255-activityValue/2});
+            color:rgb(${activityValue},${activityValue},${activityValue});
+            }
+        `;
+        */
+        document.body.appendChild(tStyle);
+    }
+}
+
 function handleChapterCompletion()
 {
     console.log("fetch completion");
@@ -97,6 +154,32 @@ function handleChapterCompletion()
     writeToExplanation(explanation);
 }
 
+function handleChapterCompletionByIp()
+{
+    let ip=globalFetchIp;
+    let params={'ip':ip};
+    let explanation=
+    `
+        This grid gets filled in if you complete EACH of the activities in the chapter, any activites you haven't completed will work against you.
+    `;
+    writeToExplanation(explanation);
+
+    callBackend("fetchCompletionByIp",params,paintNumbers);
+}
+
+function handleChapterExposureByIp()
+{
+    let ip=globalFetchIp;
+    let params={'ip':ip};
+    callBackend("fetchExposureByIp",params,paintNumbers);
+    const explanation=
+    `
+        This grid gets filled in fully if you complete ANY activities from the chapter.  It is to let you know what you've seen and what you haven't.
+    `;
+	writeToExplanation(explanation);
+
+
+}
 
 function handleChapterExposure()
 {
@@ -125,5 +208,92 @@ function callBackend(functionName,functionParams,callback)
     .then(data=>callback(data));
 }
 
+function handleLoadProgressButton()
+{
+    console.log("Handle load progress button");
+    callBackend("fetchOtherProgressList",'',printProgressList);
+    
+}
+
+
+
+function getCurrentAccount()
+{
+    console.log("Get current account");
+    callBackend("fetchCurrentAccount","",printCurrentAccount);
+}
+function printCurrentAccount(accountData)
+{
+    document.getElementById("currentProgressIndicator").innerHTML=accountData;
+    fetchIpFromAccount(accountData);
+    
+}
+
+function fetchIpFromAccount(account)
+{
+    console.log("Fetch ip from account",account);
+    let params={'account':account};
+    callBackend("getIpWithAccount",params,setGlobalIpForViewing);
+}
+
+function setGlobalIpForViewing(data)
+{
+    globalFetchIp=data;
+    console.log("Global ip for viewing is ",data);
+}
+
+function printProgressList(data)
+{
+    console.log(data);
+    let tableOpen=
+    `
+        <table><tbody>
+    `;
+    let tableClose=
+    `
+        </tbody></table>
+    `;
+    let tableHeaders=
+    `
+        <tr>
+            <th>Accounts</th>
+        </tr>
+    `;
+    let tableRows='';
+    for(const i of data)
+    {
+        let ip=i["ip"];
+        let progressId=i["progressId"];
+        console.log(ip);
+        console.log(progressId);
+        tableRows+=
+        `
+            <tr>
+                <td>
+                    <button class="progButton" onclick="uploadProgress('${ip}','${progressId}')">${progressId}</button>
+                </td>
+            </tr>
+        `;
+    }
+    let table=tableOpen+tableHeaders+tableRows+tableClose;
+    document.getElementById("loadProgressListoutput").innerHTML=table;
+}
+
+function uploadProgress(ip,progressId)
+{
+    console.log('upload progress',ip,progressId);
+    document.getElementById("currentProgressIndicator").innerHTML=progressId;
+    globalFetchIp=ip;
+    clearNumbers();
+    
+
+}
+
+function handleBacktoLocal()
+{
+    console.log("Back to local");
+    getCurrentAccount();
+    clearNumbers();
+}
 
 progressInit();
