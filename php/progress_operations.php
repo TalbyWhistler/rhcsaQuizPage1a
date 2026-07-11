@@ -32,7 +32,7 @@ function fetchActivity()
 function fetchActivityByIp($ip)
 {
     include 'db_connect.php';
-  //  $ip=$_SERVER["REMOTE_ADDR"];
+    $ip=$_SERVER["REMOTE_ADDR"];
     $outputMessage="Fetch activity operations is working $ip";
 
     $outputArray=[];
@@ -160,7 +160,7 @@ function fetchScores()
 function fetchScoresByIp($ip)
 {
      include 'db_connect.php';
-    $ip=$_SERVER["REMOTE_ADDR"];
+   // $ip=$_SERVER["REMOTE_ADDR"];
     $outputArray=[];
     for($i=1;$i<=25;$i++)
         {
@@ -263,37 +263,9 @@ function fetchCurrentAccount()
             }    
 }
 
-function fetchOtherProgressListB()
-{
-    include 'db_connect.php';
-    $outputArray=[];
-    $stmt=$conn->prepare("select uuid,ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId from leaderboard group by ip order by dateof asc");
-    if ($stmt->execute())
-        {
-            //return 'Statement executed.';
-            $result=$stmt->get_result();
-            while($row=$result->fetch_assoc())
-                {
-                    $uuid=$row["uuid"];
-                    $ip=$row["ip"];
-                    $progressId=$row["progressId"];
-                    $unitArray=['uuid'=>$uuid,'ip'=>$ip,'progressId'=>$progressId];
-                    array_push($outputArray,$unitArray);
-                }
-            return $outputArray;
-        }
-        else 
-            {
-                return 'Error executing statement.';
-            }
-}
-
-
 function fetchOtherProgressList()
 {
-    // 1 distinct ip list 
-    // 2 
-    include 'db_connect.php';
+include 'db_connect.php';
     $outputArray=[];
     $ipListArray=[];
     $stmt=$conn->prepare("select distinct ip from leaderboard");
@@ -320,44 +292,17 @@ function fetchOtherProgressList()
                     array_push($outputArray,$unitArray);
                 }
         }
-    return $outputArray;
-}
-
-function getIpWithAccountB($account)
-{
-    include 'db_connect.php';
-    $outputMessage='get ip with account operations is working account is '.$account;
-    $stmt=$conn->prepare("select *
-from (
-select uuid,ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId from leaderboard  group by ip order by dateof asc) t
-where t.progressId=?");
-    $stmt->bind_param("s",$account);
-    if ($stmt->execute())
-        {
-          //  return 'statement executed';
-            $result=$stmt->get_result();
-            while($row=$result->fetch_assoc())
-                {
-                    $ip=$row["ip"];
-                    return $ip;
-                }
-        }
-        else 
-            {
-                return 'error executing statement';
-            }
-}
+    return $outputArray;}
 
 
-// had to rewrite the above because group by is banned on the server
 function getIpWithAccount($account)
 {
     include 'db_connect.php';
     $outputMessage='get ip with account operations is working account is '.$account;
     $stmt=$conn->prepare("select *
 from (
-select ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId from leaderboard  order by dateof asc) t
-where t.progressId=? limit 1;");
+select uuid,ip,REPLACE(REPLACE(concat(ip,dateof),'.',''),'-','') as progressId from leaderboard order by dateof asc) t
+where t.progressId=? limit 1");
     $stmt->bind_param("s",$account);
     if ($stmt->execute())
         {

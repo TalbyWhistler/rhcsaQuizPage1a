@@ -158,6 +158,12 @@ function handleChapterCompletionByIp()
 {
     let ip=globalFetchIp;
     let params={'ip':ip};
+    let explanation=
+    `
+        This grid gets filled in if you complete EACH of the activities in the chapter, any activites you haven't completed will work against you.
+    `;
+    writeToExplanation(explanation);
+
     callBackend("fetchCompletionByIp",params,paintNumbers);
 }
 
@@ -166,6 +172,13 @@ function handleChapterExposureByIp()
     let ip=globalFetchIp;
     let params={'ip':ip};
     callBackend("fetchExposureByIp",params,paintNumbers);
+    const explanation=
+    `
+        This grid gets filled in fully if you complete ANY activities from the chapter.  It is to let you know what you've seen and what you haven't.
+    `;
+	writeToExplanation(explanation);
+
+
 }
 
 function handleChapterExposure()
