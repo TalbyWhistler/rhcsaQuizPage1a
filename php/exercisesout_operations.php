@@ -25,7 +25,7 @@ function fetchRecordsList()
 function getData($figure)
 {
     include 'db_connect.php';
-    $stmt=$conn->prepare("select * from exercisesMeta where figure=?");
+    $stmt=$conn->prepare("select * from exercisesmeta where figure=?");
     $stmt->bind_param("s",$figure);
     $metadataArray=[];
     $dataArray=[];
