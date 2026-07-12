@@ -8,7 +8,15 @@ function labOutInit()
 {
     console.log("Chapter End lab out page");
     attachStyleSheet();
+    selectNav();
 }
+
+function selectNav()
+{
+    let el=document.getElementById("chapterLabButton");
+    el.classList.add('selectedNav');
+}
+
 
 
 function attachStyleSheet()

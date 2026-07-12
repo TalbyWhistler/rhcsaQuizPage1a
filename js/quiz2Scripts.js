@@ -11,12 +11,20 @@ function initializeQuiz2()
     quizRightCount=0;
     quizWrongCount=0;
     numQuestions=0;
-    
+   // selectNav();
+    selectNav();
   //  document.getElementById("rightWrongStatus").innerHTML=quizWrongCount;
     attachStyleSheetQuiz2();
   //  callBackendQ2("fetchRecordsList",'',console.log);
    // fetchAvailableFiguresForEdit();
 }
+
+function selectNav()
+{
+    let el=document.getElementById("tableButton");
+    el.classList.add('selectedNav');
+}
+
 
 
 function attachStyleSheetQuiz2()
