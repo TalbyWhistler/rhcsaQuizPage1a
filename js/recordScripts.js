@@ -3,12 +3,19 @@ let globalIp='';
 function recordsInit()
 {
     console.log("Records");
-    
+    selectNav();
     attachStylesheet();
     fetchRecord();
    // 
     fetchIp();
 }
+
+function selectNav()
+{
+    let el=document.getElementById("recordButton");
+    el.classList.add('selectedNav');
+}
+
 
 function fetchProgressList()
 {

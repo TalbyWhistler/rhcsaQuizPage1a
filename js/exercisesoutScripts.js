@@ -11,8 +11,16 @@ function exercisesOutInit()
 {
     console.log("Exercises out");
     attachStylesheet();
+    selectNav();
    // fetchRecordsForButtons();
 }
+
+function selectNav()
+{
+    let el=document.getElementById("exerciseButton");
+    el.classList.add('selectedNav');
+}
+
 
 
 function fetchRecordsForButtons()

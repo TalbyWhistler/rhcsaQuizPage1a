@@ -27,9 +27,11 @@
             Each chapter of the cert guide contains several memory tables.   These have been mixed up and the quizzes are based on you selecting the correct matching entries.
         ");
 
+        $scriptLink="<script src='js/welcomeScripts.js'></script>";
         $pageContents=
         "
             $subtitle 
+            $scriptLink
             $openBlurb
             $already 
             $alreadyText 

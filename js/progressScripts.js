@@ -6,7 +6,15 @@ function progressInit()
     console.log("Progress");
     getCurrentAccount();
     attachStylesheet();
+    selectNav();
 }
+
+function selectNav()
+{
+    let el=document.getElementById("progressButton");
+    el.classList.add('selectedNav');
+}
+
 
 function attachStylesheet()
 {

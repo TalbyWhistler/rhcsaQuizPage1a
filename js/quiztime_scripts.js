@@ -20,6 +20,18 @@ function quizTimeTesto()
     console.log("Testo!");
 }
 
+function selectNav()
+{
+    let el=document.getElementById("knowBeforeOption");
+    el.classList.add('selectedNav');
+}
+
+function knowBeforeInit()
+{
+    console.log("know before");
+    selectNav();
+}
+
 
 
 function handleTakeQuizButton()
@@ -457,4 +469,4 @@ function callLeaderboard()
     //console.log(outputMessage);
 }
 
-
+knowBeforeInit();

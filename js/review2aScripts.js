@@ -37,7 +37,15 @@ function rq2ainit()
     console.log("Review Questions");
     attachStyleSheet();
      hideQuizCard();
+     selectNav();
 }
+
+function selectNav()
+{
+    let el=document.getElementById("reviewQuizOption");
+    el.classList.add('selectedNav');
+}
+
 
 function writeToStartQuizStatus(message)
 {
