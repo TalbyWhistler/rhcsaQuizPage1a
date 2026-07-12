@@ -11,7 +11,7 @@ function exercisesOutInit()
 {
     console.log("Exercises out");
     attachStylesheet();
-    fetchRecordsForButtons();
+   // fetchRecordsForButtons();
 }
 
 
@@ -245,6 +245,25 @@ function callLeaderboard()
     .then(data=>console.log(data));
 
     //console.log(outputMessage);
+}
+
+function handleChapterButton(chapter)
+{
+    console.log("Handle chapter button ",chapter);
+    document.getElementById("headerOutputArea").innerHTML='';
+    document.getElementById("stepsOutputArea").innerHTML='';
+    document.getElementById("nextButtonsOutput").innerHTML='';
+    document.getElementById("activeChapterIndicator").innerHTML=chapter;
+    document.getElementById("stepsOutputArea").innerHTML='';
+    
+    for(let i=1;i<=25;i++)
+    {
+        let el=document.getElementById(`chapterButton${i}`);
+        el.classList.remove('selectedChapter')
+    }
+    let target=document.getElementById(`chapterButton${chapter}`);
+    target.classList.add("selectedChapter");
+    callBackendExOut("fetchRecordsPerChapter",{'chapter':chapter},printButtons);
 }
 
 exercisesOutInit();

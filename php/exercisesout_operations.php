@@ -69,4 +69,29 @@ function getData($figure)
     return false;
 }
 
+
+function fetchRecordsPerChapter($chapter)
+{
+    include 'db_connect.php';
+    $stmt=$conn->prepare("select *,substring(figure,1,1) as chapter from exercisesmeta where substring(figure,1,1)=? order by figure asc");
+    $stmt->bind_param("i",$chapter);
+    $outputArray=[];
+    if ($stmt->execute())
+        {
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                    $figure=$row["figure"];
+                    $title=$row["title"];
+                    $unitArray=['figure'=>$figure,'title'=>$title];   
+                    array_push($outputArray,$unitArray);
+                }
+        }
+        else 
+            {
+                return 'Error fetching records';
+            }
+    return $outputArray;
+}
+
 ?>

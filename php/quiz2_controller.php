@@ -26,6 +26,14 @@
                     $outputMessage=fetchDataAndMetadata($figure);
                     break;
                 }
+            case("fetchFiguresPerChapter"):
+                {
+                    $params=$jsonInput["params"];
+                    $chapter=$params["chapter"];
+                    $outputMessage='Figures per chapter control is working';
+                    $outputMessage=fetchFiguresPerChapter($chapter);
+                    break;
+                }
         }
     echo json_encode($outputMessage);
 ?>

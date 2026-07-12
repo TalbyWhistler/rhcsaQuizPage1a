@@ -18,10 +18,23 @@
 
         $nextButtonsOutput=createElement("p","nextButtonsOutput","outputArea","");
 
+         $chapterButtons='';
+        for($i=1;$i<=25;$i++)
+            {
+                $chapterButtons=$chapterButtons.
+                "
+                    <button id='chapterButton$i' class='chapterButton' onclick='handleChapterButton($i)'>$i</button>
+                ";
+            }
+        $activeChapterLabel=createElement('label','activeChapterLabel','statusIndicatorLabel','Current Chapter: ');
+        $activeChapterIndicator=createElement('label','activeChapterIndicator','statusIndicator','None');
 
         $content=''
             .$title
             .$subTitle
+             .$chapterButtons
+            .'</br>'
+            .$activeChapterLabel.$activeChapterIndicator
             .$buttonAreaContainer
             .$headerContainer
             .$stepsOutContainer

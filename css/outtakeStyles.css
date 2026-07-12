@@ -98,3 +98,11 @@ button
     height:50px;
 
 }
+
+
+
+.selectedChapter
+{
+    color:white;
+    background-color: black;
+}

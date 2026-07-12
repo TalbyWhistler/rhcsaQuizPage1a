@@ -98,4 +98,26 @@ function fetchDataAndMetadata($figure)
     return $outputMessage;
 }
 
+function fetchFiguresPerChapter($chapter)
+{
+    include 'db_connect.php';
+    $outputArray=[];
+    $stmt=$conn->prepare("select * from memorymeta where chapter=? order by figure asc");
+    $stmt->bind_param("i",$chapter);
+    if ($stmt->execute())
+        {
+            $result=$stmt->get_result();
+            while($row=$result->fetch_assoc())
+                {
+                     $figure=$row["figure"];
+                    $uuid=$row["uuid"];
+                    $description=$row["description"];
+                    $unitArray=['figure'=>$figure,'uuid'=>$uuid,'description'=>$description];
+                    
+                    array_push($outputArray,$unitArray);
+                }
+            return $outputArray;
+        }
+    
+}
 ?>

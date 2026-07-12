@@ -15,7 +15,7 @@ function initializeQuiz2()
   //  document.getElementById("rightWrongStatus").innerHTML=quizWrongCount;
     attachStyleSheetQuiz2();
   //  callBackendQ2("fetchRecordsList",'',console.log);
-    fetchAvailableFiguresForEdit();
+   // fetchAvailableFiguresForEdit();
 }
 
 
@@ -387,5 +387,29 @@ function callLeaderboard()
     .then(data=>console.log(data));
 
     //console.log(outputMessage);
+}
+
+function fetchFiguresPerChapter(chapter)
+{
+    console.log("fetch avail figures per chapter ",chapter);
+    callBackendQ2("fetchFiguresPerChapter",{'chapter':chapter},printAvailableFiguresForEdit);
+}
+
+
+
+function handleChapterButton(chapter)
+{
+    console.log("Handle chapter button ",chapter);
+    document.getElementById("activeChapterIndicator").innerHTML=chapter;
+    document.getElementById("quizTableOutput").innerHTML='';
+    
+    for(let i=1;i<=25;i++)
+    {
+        let el=document.getElementById(`chapterButton${i}`);
+        el.classList.remove('selectedChapter')
+    }
+    let target=document.getElementById(`chapterButton${chapter}`);
+    target.classList.add("selectedChapter");
+    fetchFiguresPerChapter(chapter);
 }
 initializeQuiz2();
