@@ -13,10 +13,23 @@
     $rightWrong=createElement('p',"rightWrongStatus","statusIndicator",'--:');
     $wrongCount=createElement('p',"wrongCount","statusIndicator","Wrong Answers: 0");
 
+    $chapterButtons='';
+    for($i=1;$i<=25;$i++)
+        {
+            $chapterButtons=$chapterButtons.
+            "
+                <button id='chapterButton$i' class='chapterButton' onclick='handleChapterButton($i)'>$i</button>
+            ";
+        }
+    $activeChapterLabel=createElement('label','activeChapterLabel','statusIndicatorLabel','Current Chapter: ');
+    $activeChapterIndicator=createElement('label','activeChapterIndicator','statusIndicator','None');
     $pageContents=''
             .$pageHeadline 
             .$subHeading
             .$scriptLink
+            .$chapterButtons
+            .'</br>'
+            .$activeChapterLabel.$activeChapterIndicator
             .$buttonOutput
             .$rightWrong
             .$wrongCount
