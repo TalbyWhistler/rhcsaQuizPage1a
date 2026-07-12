@@ -32,7 +32,7 @@ function fetchActivity()
 function fetchActivityByIp($ip)
 {
     include 'db_connect.php';
-    $ip=$_SERVER["REMOTE_ADDR"];
+   // $ip=$_SERVER["REMOTE_ADDR"];
     $outputMessage="Fetch activity operations is working $ip";
 
     $outputArray=[];

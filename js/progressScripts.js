@@ -31,7 +31,7 @@ function writeToExplanation(message)
 {
     document.getElementById("explanationIndicator").innerHTML=message;
 }
-
+/*
 function handleChapterActivity()
 {
     console.log('Handle chapter activity');
@@ -43,7 +43,7 @@ function handleChapterActivity()
     writeToExplanation(explanation);
     callBackend(functionName,'',paintNumbers);
 }
-
+*/
 function handleChapterActivityByIp()
 {
     let explanation=
@@ -53,6 +53,7 @@ function handleChapterActivityByIp()
     writeToExplanation(explanation);
     let functionName="fetchActivityByIp";
     let params={'ip':globalFetchIp};
+    console.log("activty params:",params);
     callBackend(functionName,params,paintNumbers);
 }
 
