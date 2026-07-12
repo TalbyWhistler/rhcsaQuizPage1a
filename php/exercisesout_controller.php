@@ -25,6 +25,15 @@
                     $figure=$params["figure"];
                     $outputMessage="Get data has fired ".$figure;
                     $outputMessage=getData($figure);
+                    break;
+                }
+            case("fetchRecordsPerChapter"):
+                {
+                    $params=$jsonInput["params"];
+                    $chapter=$params["chapter"];
+                    $outputMessage="Fetch records per chapter control is working".$chapter;
+                    $outputMessage=fetchRecordsPerChapter($chapter);
+                    break;
                 }
         }
     
