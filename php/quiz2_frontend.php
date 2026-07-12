@@ -13,7 +13,7 @@
     $rightWrong=createElement('p',"rightWrongStatus","statusIndicator",'--:');
     $wrongCount=createElement('p',"wrongCount","statusIndicator","Wrong Answers: 0");
 
-    $chapterButtons='';
+    $chapterButtons='<label>Chapters: </label>';;
     for($i=1;$i<=25;$i++)
         {
             $chapterButtons=$chapterButtons.

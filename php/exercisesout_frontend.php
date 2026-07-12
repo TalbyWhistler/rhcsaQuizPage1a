@@ -18,7 +18,7 @@
 
         $nextButtonsOutput=createElement("p","nextButtonsOutput","outputArea","");
 
-         $chapterButtons='';
+         $chapterButtons='<label>Chapters: </label>';;
         for($i=1;$i<=25;$i++)
             {
                 $chapterButtons=$chapterButtons.

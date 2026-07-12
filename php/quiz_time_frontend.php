@@ -32,7 +32,7 @@ function cb($id,$class,$function,$inner)
 
     $script='<script src="js/quiztime_scripts.js"></script>';
     $chapterChoice='<input type="number" id="quizTimeChapterChoice" class="panelControl"/>';
-    $chapterChoiceLabel=ce('label','chapterChoiceLabel','label','Chapters');
+    $chapterChoiceLabel=ce('label','chapterChoiceLabel','label','Chapters:');
     $br='</br>';
     $takeQuizButton=cb("takeQuizButton","panelButton",'handleTakeQuizButton',"Take Quiz!");
     $takeQuizStatusIndicator=ce('p',"takeQuizStatusIndicator","statusIndicator","Ready");
