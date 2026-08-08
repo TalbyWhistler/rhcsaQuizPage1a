@@ -73,7 +73,8 @@ function getData($figure)
 function fetchRecordsPerChapter($chapter)
 {
     include 'db_connect.php';
-    $stmt=$conn->prepare("select *,substring(figure,1,1) as chapter from exercisesmeta where substring(figure,1,1)=? order by figure asc");
+   // $stmt=$conn->prepare("select *,substring(figure,1,1) as chapter from exercisesmeta where substring(figure,1,1)=? order by figure asc");
+   $stmt=$conn->prepare("select *,substring(figure,1,locate('-',figure)-1) as chapter from exercisesmeta where substring(figure,1,locate('-',figure)-1)=? order by figure asc");
     $stmt->bind_param("i",$chapter);
     $outputArray=[];
     if ($stmt->execute())
